@@ -25,7 +25,7 @@ const update_create_post = (req, res) => {
             console.log(err);
         });
     
-    res.redirect('/');
+    res.redirect('/admissions');
 };
 
 const update_delete = (req, res) => {
