@@ -1,0 +1,24 @@
+<html lang="en">
+    <%- include('./partials/head.ejs') %> 
+
+    <body>
+        <%- include('./partials/nav.ejs') %> 
+
+        <div class="blogs content">
+            <h2>All Updates</h2>
+        
+            <% if(updates.length > 0) { %>
+                <% updates.forEach(update => { %> 
+                    <a class="single" href="<%= update.link %> ">
+                        <h3 class="title"><%= update.title %></h3>
+                        <p class="snippet"><%= update.content%></p>
+                    </a>
+                <% }) %> 
+            <% } else { %> 
+                <p>There are no updates to display...</p>    
+            <% } %> 
+        </div>
+
+        <%- include('./partials/footer.ejs') %> 
+    </body>
+</html>
