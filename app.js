@@ -22,8 +22,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
 // routes
+
 app.get('/', (req, res) => {
-    res.redirect('/updates');
+    res.status(404).render('404', { err: 'Please go to /admissions'});
 });
 
-app.use('/updates', updateRoutes);
+app.get('/admissions', (req, res) => {
+    res.redirect('/admissions/updates');
+});
+
+app.use('/admissions/updates', updateRoutes);
+
+app.use((req, res) => {
+    res.status(404).render('404');;
+});
