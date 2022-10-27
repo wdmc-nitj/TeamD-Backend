@@ -1,7 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const Update = require('./models/update');
+const updateRoutes = require('./routes/updateRoutes');
 
 // express app
 const app = express();
@@ -26,41 +26,4 @@ app.get('/', (req, res) => {
     res.redirect('/updates');
 });
 
-app.get('/updates', (req, res) => {
-    Update.find().sort({ createdAt: -1})
-        .then((result) => {
-            res.render('index', { updates: result });
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-});
-
-app.get('/create', (req, res) => {
-    res.render('create');
-});
-
-app.post('/create', (req, res) => {
-    const update = new Update(req.body);
-
-    update.save()
-        .then((result) => {
-            res.send(result);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-    
-    res.redirect('/');
-});
-
-app.delete('/:id', (req, res) => {
-    const id = req.params.id;
-    Update.findByIdAndDelete(id)
-        .then((result) => {
-            res.json({ redirect: '/' });
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-});
+app.use('/updates', updateRoutes);
