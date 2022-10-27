@@ -3,11 +3,15 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 const updateRoutes = require('./routes/updateRoutes');
 
+// Environment variables for database username and password
+const dbUser = process.env.atlasUser;
+const dbPass = process.env.atlasPassword;
+
 // express app
 const app = express();
 
 // connect to MongoDB
-const dbURI = 'mongodb+srv://dohit:dohit@cluster0.5swxwob.mongodb.net/admissions-ug?retryWrites=true&w=majority'
+const dbURI = `mongodb+srv://${dbUser}:${dbPass}@cluster0.5swxwob.mongodb.net/admissions-ug?retryWrites=true&w=majority`;
 mongoose.connect(dbURI)
     .then((resutlt) => {
         app.listen(3000);
