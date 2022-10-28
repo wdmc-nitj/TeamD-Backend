@@ -7,7 +7,7 @@ const ug_update_list = (req, res) => {
         })
         .catch((err) => {
             console.log(err);
-        })
+        });
 };
 
 const ug_update_create_get = (req, res) => {
@@ -19,29 +19,27 @@ const ug_update_create_post = (req, res) => {
 
     update.save()
         .then((result) => {
-            res.send(result);
+            res.redirect('/admissions');
         })
         .catch((err) => {
             console.log(err);
         });
-    
-    res.redirect('/admissions');
 };
 
-const ug_update_delete = (req, res) => {
-    const id = req.params.id;
-    ugUpdate.findByIdAndDelete(id)
-        .then((result) => {
-            res.json({ redirect: '/' });
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-};
+// const ug_update_delete = (req, res) => {
+//     const id = req.params.id;
+//     ugUpdate.findByIdAndDelete(id)
+//         .then((result) => {
+//             res.json({ redirect: '/' });
+//         })
+//         .catch((err) => {
+//             console.log(err);
+//         });
+// };
 
 module.exports = {
     ug_update_list,
     ug_update_create_get,
     ug_update_create_post,
-    ug_update_delete
+    // ug_update_delete
 };
