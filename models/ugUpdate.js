@@ -1,12 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const updateSchema = new Schema({
+const ugUpdateSchema = new Schema({
     title: {
-        type: String,
-        required: true
-    },
-    content: {
         type: String,
         required: true
     },
@@ -15,5 +11,5 @@ const updateSchema = new Schema({
     }
 }, { timestamps: true });
 
-const Update = mongoose.model('Update', updateSchema);
-module.exports = Update;
+const ugUpdate = mongoose.model('ugUpdate', ugUpdateSchema);
+module.exports = ugUpdate;

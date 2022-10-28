@@ -1,7 +1,7 @@
-const Update = require('../models/update');
+const ugUpdate = require('../models/ugUpdate');
 
-const update_index = (req, res) => {
-    Update.find().sort({ createdAt: -1})
+const ug_update_list = (req, res) => {
+    ugUpdate.find().sort({ createdAt: -1})
         .then((result) => {
             res.render('index', { updates: result });
         })
@@ -10,12 +10,12 @@ const update_index = (req, res) => {
         })
 };
 
-const update_create_get = (req, res) => {
+const ug_update_create_get = (req, res) => {
     res.render('create');
 };
 
-const update_create_post = (req, res) => {
-    const update = new Update(req.body);
+const ug_update_create_post = (req, res) => {
+    const update = new ugUpdate(req.body);
 
     update.save()
         .then((result) => {
@@ -28,9 +28,9 @@ const update_create_post = (req, res) => {
     res.redirect('/admissions');
 };
 
-const update_delete = (req, res) => {
+const ug_update_delete = (req, res) => {
     const id = req.params.id;
-    Update.findByIdAndDelete(id)
+    ugUpdate.findByIdAndDelete(id)
         .then((result) => {
             res.json({ redirect: '/' });
         })
@@ -40,8 +40,8 @@ const update_delete = (req, res) => {
 };
 
 module.exports = {
-    update_index,
-    update_create_get,
-    update_create_post,
-    update_delete
+    ug_update_list,
+    ug_update_create_get,
+    ug_update_create_post,
+    ug_update_delete
 };
