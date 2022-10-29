@@ -9,15 +9,20 @@
         
             <% if(updates.length > 0) { %>
                 <% updates.forEach(update => { %> 
-                    <a class="single" href="<%= update.link %> ">
-                        <h3 class="title">
-                            <%= update.title %>
-                            <!-- Display "New" Gif if update create time is under 8 days from current date -->
-                            <% if((new Date().getTime() - (8 * 24 * 60 * 60 * 1000)) < update.createdAt.getTime()) { %> 
-                                <img src="/new.gif" alt="new update gif">
-                            <% } %> 
-                        </h3>
-                    </a>
+                    <div class="update-block">
+                        <a class="single" href="<%= update.link %> ">
+                            <h3 class="title">
+                                <%= update.title %>
+                                <!-- Display "New" Gif if update create time is under 8 days from current date -->
+                                <% if((new Date().getTime() - (8 * 24 * 60 * 60 * 1000)) < update.createdAt.getTime()) { %> 
+                                    <img src="/new.gif" alt="new update gif">
+                                <% } %> 
+                            </h3>
+                        </a>
+                        <a class="del" data-doc="<%= update._id %>">
+                            Delete this update
+                        </a>
+                    </div>
                 <% }) %> 
             <% } else { %> 
                 <p>There are no updates to display...</p>    
@@ -25,5 +30,19 @@
         </div>
 
         <%- include('./partials/footer.ejs') %> 
+
+        <script>
+            const trashcan = document.querySelector('a.del');
+            trashcan.addEventListener('click', (e) => {
+                const endpoint = `/admissions/ug/updates/${trashcan.dataset.doc}`;
+    
+                fetch(endpoint, {
+                    method: 'DELETE'
+                })
+                .then((response) => response.json())
+                .then((data) => window.location.href = data.redirect)
+                .catch((err) => console.log(err));
+            });
+        </script>
     </body>
 </html>

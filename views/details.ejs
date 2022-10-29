@@ -5,10 +5,9 @@
     <%- include("./partials/nav.ejs") %>
 
     <div class="details content">
-        <h2><%= update.title %></h2>
-        <div class="content">
-            <p><%= update.body %></p>
-        </div>
+        <a class="single" href="<%= update.link %> ">
+            <h2 class="title"><%= update.title %></h2>
+        </a>
         <a class="delete" data-doc="<%= update._id %>">
             <img src="/trashcan.svg" alt="delete icon">
         </a>
@@ -18,7 +17,7 @@
     <script>
         const trashcan = document.querySelector('a.delete');
         trashcan.addEventListener('click', (e) => {
-            const endpoint = `/admissions/updates/${trashcan.dataset.doc}`;
+            const endpoint = `/admissions/ug/updates/${trashcan.dataset.doc}`;
 
             fetch(endpoint, {
                 method: 'DELETE'

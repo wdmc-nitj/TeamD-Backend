@@ -7,36 +7,43 @@ const ugUpdateRoutes = require('./routes/ugUpdateRoutes');
 const dbUser = process.env.atlasUser;
 const dbPass = process.env.atlasPassword;
 
-// express app
-const app = express();
+const dbName = 'admissions';
+
+// express App
+const App = express();
 
 // connect to MongoDB
-const dbURI = `mongodb+srv://${dbUser}:${dbPass}@cluster0.5swxwob.mongodb.net/admissions?retryWrites=true&w=majority`;
+const dbURI = `mongodb+srv://${dbUser}:${dbPass}@cluster0.5swxwob.mongodb.net/${dbName}?retryWrites=true&w=majority`;
 mongoose.connect(dbURI)
     .then((resutlt) => {
-        app.listen(3000);
+        App.listen(3000);
     })
     .catch((err) => {
         console.log(err);
     });
 
-app.set('view engine', 'ejs');
-app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));
-app.use(morgan('dev'));
+App.set('view engine', 'ejs');
+App.use(express.static('public'));
+App.use(express.urlencoded({ extended: true }));
+App.use(morgan('dev'));
 
 // routes
 
-app.get('/', (req, res) => {
-    res.status(404).render('404', { err: 'Please go to /admissions'});
+App.get('/', (req, res) => {
+    res.redirect('/admissions/ug/updates');
+    // res.status(404).render('404', { err: 'Please go to /admissions'});
 });
 
-app.get('/admissions', (req, res) => {
+App.get('/health-check', (req, res) => {
+    res.send('OK');
+});
+
+App.get('/admissions', (req, res) => {
     res.redirect('/admissions/ug/updates');
 });
 
-app.use('/admissions/ug/updates', ugUpdateRoutes);
+App.use('/admissions/ug/updates', ugUpdateRoutes);
 
-app.use((req, res) => {
+App.use((req, res) => {
     res.status(404).render('404');;
 });

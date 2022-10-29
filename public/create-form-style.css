@@ -67,7 +67,7 @@ h3 {
 
 /* index styles */
 .blogs a {
-  display: block;
+  display: contents;
   margin: 40px 0;
   padding-left: 30px;
   border-left: 6px solid crimson;
@@ -82,13 +82,13 @@ h3 {
   position: relative;
 }
 
-/* .delete {
+.delete {
   position: absolute;
   top: 0;
   right: 0;
   border-radius: 50%;
   padding: 8px;
-} */
+}
 
 .delete:hover {
   cursor: pointer;
@@ -126,4 +126,17 @@ textarea {
   border: 0;
   font-size: 1.2em;
   cursor: pointer;
+}
+
+.update-block {
+  padding: 10px;
+  padding-left: 20px;
+  border-style: outset;
+  border-radius: 10px;
+  margin: 5px auto;
+}
+
+.del:hover {
+  cursor: pointer;
+  box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2);
 }
