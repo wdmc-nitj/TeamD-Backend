@@ -35,7 +35,7 @@ const ug_update_details = (req, res) => {
         })
         .catch((err) => {
             console.log(err);
-            res.render('404');
+            res.status(404).render('404');
         });
 };
 

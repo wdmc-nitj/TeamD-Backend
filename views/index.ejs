@@ -13,8 +13,9 @@
                         <a class="single" href="<%= update.link %> ">
                             <h3 class="title">
                                 <%= update.title %>
-                                <!-- Display "New" Gif if update create time is under 8 days from current date -->
+                                
                                 <% if((new Date().getTime() - (8 * 24 * 60 * 60 * 1000)) < update.createdAt.getTime()) { %> 
+                                    <!-- Display "New" Gif if update create time is under 8 days from current date -->
                                     <img src="/new.gif" alt="new update gif">
                                 <% } %> 
                             </h3>
