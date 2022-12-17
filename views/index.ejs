@@ -14,7 +14,7 @@
                             <h3 class="title">
                                 <%= update.title %>
                                 
-                                <% if((new Date().getTime() - (8 * 24 * 60 * 60 * 1000)) < update.createdAt.getTime()) { %> 
+                                <% if((new Date().getTime() - (8 * 24 * 60 * 60 * 1000)) < update.updatedAt.getTime()) { %> 
                                     <!-- Display "New" Gif if update create time is under 8 days from current date -->
                                     <img src="/new.gif" alt="new update gif">
                                 <% } %> 

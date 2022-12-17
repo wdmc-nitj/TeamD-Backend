@@ -8,6 +8,10 @@ const ugUpdateSchema = new Schema({
     },
     link: {
         type: String
+    },
+    enabled: {
+        type: Boolean,
+        default: true
     }
 }, { timestamps: true });
 

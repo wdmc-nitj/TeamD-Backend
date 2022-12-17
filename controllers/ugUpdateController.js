@@ -1,7 +1,7 @@
 const ugUpdate = require('../models/ugUpdate');
 
 const ug_update_list = (req, res) => {
-    ugUpdate.find().sort({ createdAt: -1})
+    ugUpdate.find({ enabled: true}).sort({ updatedAt: -1})
         .then((result) => {
             res.render('index', { updates: result });
         })
