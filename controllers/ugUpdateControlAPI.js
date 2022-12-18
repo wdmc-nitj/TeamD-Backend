@@ -1,7 +1,19 @@
 const ugUpdate = require('../models/ugUpdate');
 
 const ug_update_list = (req, res, enabled) => {
-    ugUpdate.find({ enabled: enabled }).sort({ updatedAt: -1 })
+    ugUpdate.find({ enabled: enabled })
+        .sort({ updatedAt: -1 })
+        .then((result) => {
+            console.log(result);
+            res.json(result);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
+const ug_update_list_all = (req, res) => {
+    ugUpdate.find()
+        .sort({ updatedAt: -1 })
         .then((result) => {
             res.json(result);
         })
@@ -33,6 +45,7 @@ const ug_update_create_post = (req, res) => {
 
 const ug_update_details = (req, res) => {
     const id = req.params.id;
+    // check ID validity
     ugUpdate.findById(id)
         .then((result) => {
             res.json(result);
@@ -77,6 +90,7 @@ const ug_update_patch = (req, res) => {
 
 module.exports = {
     ug_update_list,
+    ug_update_list_all,
     ug_update_list_enabled,
     ug_update_list_disabled,
     ug_update_create_post,
