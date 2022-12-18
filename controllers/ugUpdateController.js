@@ -20,7 +20,7 @@ const ug_update_list_disabled = (req, res) => {
 
 const ug_update_create_get = (req, res) => {
     // res.render('create');
-    res.status(404).render('404', { err: 'Please create posts using the API' });
+    res.status(404).render('404', { err: 'Please create posts using the API at "https://documenter.getpostman.com/view/24119335/2s8YzZPK2Y"' });
 };
 
 const ug_update_create_post = (req, res) => {

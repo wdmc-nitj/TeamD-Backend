@@ -1,14 +1,4 @@
 const btn = document.querySelector('a.del');
-
-                // add an event listener to the delete button and for toggle button
-            // const deleteUpdate = (endpoint) => {
-            //     fetch(endpoint, {
-            //     method: 'DELETE',
-            //     })
-            //     .then((response) => response.json())
-            //     .then((data) => window.location.href = data.redirect)
-            //     .catch((err) => console.log(err));
-            // };
             
             const toggleUpdate = (enabled, endpoint) => {
                 var detailsToModify = {
@@ -39,13 +29,5 @@ const btn = document.querySelector('a.del');
                 
                 const enabled = btn.dataset.enabled;
                 toggleUpdate(enabled, endpoint);
-
-                // if (action === 'delete'){
-                //     deleteUpdate(endpoint);
-                // }
-                // else if (action === 'toggle'){
-                //     const enabled = btn.dataset.enabled;
-                //     toggleUpdate(enabled, endpoint);
-                // }
                     
             });
