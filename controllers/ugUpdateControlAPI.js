@@ -3,7 +3,7 @@ const ugUpdate = require('../models/ugUpdate');
 const ug_update_list = (req, res, enabled) => {
     ugUpdate.find({ enabled: enabled }).sort({ updatedAt: -1 })
         .then((result) => {
-            res.render('index', { updates: result });
+            res.json(result);
         })
         .catch((err) => {
             console.log(err);
@@ -18,17 +18,12 @@ const ug_update_list_disabled = (req, res) => {
     ug_update_list(req, res, false);
 };
 
-const ug_update_create_get = (req, res) => {
-    // res.render('create');
-    res.status(404).render('404', { err: 'Please create posts using the API' });
-};
-
 const ug_update_create_post = (req, res) => {
     const update = new ugUpdate(req.body);
 
     update.save()
         .then((result) => {
-            res.redirect('/admissions');
+            res.send(result)
         })
         .catch((err) => {
             console.log(err);
@@ -40,7 +35,7 @@ const ug_update_details = (req, res) => {
     const id = req.params.id;
     ugUpdate.findById(id)
         .then((result) => {
-            res.render('details', { update: result });
+            res.json(result);
         })
         .catch((err) => {
             console.log(err);
@@ -51,33 +46,29 @@ const ug_update_delete = (req, res) => {
     const id = req.params.id;
     ugUpdate.findByIdAndDelete(id)
         .then((result) => {
-            res.json({ redirect: '/' });
+            res.json(result);
         })
         .catch((err) => {
             console.log(err);
         });
 };
 
-const ug_update_put = (req, res) => {
+const ug_update_patch = (req, res) => {
     const id = req.params.id;
     ugUpdate.updateOne(
         {
             _id: id
         },
-        {
-            title: req.body.title,
-            content: req.body.content,
-            enabled: req.body.enabled
-        })
+        req.body)
         .then((result) => {
-            if(req.body.enabled === 'true'){
+            if (req.body.enabled === 'true') {
                 destination = 'disabled';
             }
-            else{
+            else {
                 destination = 'all';
             }
 
-            res.json({ redirect: `/admissions/ug/updates/${destination}` });
+            res.json(result);
         })
         .catch((err) => {
             console.log(err);
@@ -88,9 +79,8 @@ module.exports = {
     ug_update_list,
     ug_update_list_enabled,
     ug_update_list_disabled,
-    ug_update_create_get,
     ug_update_create_post,
     ug_update_details,
     ug_update_delete,
-    ug_update_put
+    ug_update_patch
 };

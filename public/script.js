@@ -24,9 +24,9 @@ const btn = document.querySelector('a.del');
                 fetch(endpoint, {
                     method: 'PUT',
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                        'Content-Type': 'application/json'
                     },
-                    body: formBody
+                    body: JSON.stringify(detailsToModify)
                 })
                 .then((response) => response.json())
                 .then((data) => window.location.href = data.redirect)

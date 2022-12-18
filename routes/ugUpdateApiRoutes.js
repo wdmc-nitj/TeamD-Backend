@@ -1,0 +1,12 @@
+const express = require('express');
+const router = express.Router();
+const ugUpdateController = require('../controllers/ugUpdateControlAPI');
+
+router.get('/enabled', ugUpdateController.ug_update_list_enabled);
+router.get('/disabled', ugUpdateController.ug_update_list_disabled);
+router.post('/create', ugUpdateController.ug_update_create_post);
+router.get('/:id', ugUpdateController.ug_update_details);
+router.delete('/:id', ugUpdateController.ug_update_delete);
+router.patch('/:id', ugUpdateController.ug_update_patch);
+
+module.exports = router;

@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const ugUpdateRoutes = require('./routes/ugUpdateRoutes');
+const ugUpdateApiRoutes = require('./routes/ugUpdateApiRoutes');
 
 // Environment variables for database username and password
 const dbUser = process.env.atlasUser;
@@ -23,7 +24,8 @@ mongoose.connect(dbURI)
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(morgan('dev'));
 
 // routes
@@ -37,6 +39,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/admissions/ug/updates', ugUpdateRoutes);
+app.use('/api/admissions/ug/updates', ugUpdateApiRoutes);
 
 app.use((req, res) => {
     res.status(404).render('404');;
