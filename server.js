@@ -28,16 +28,12 @@ app.use(morgan('dev'));
 
 // routes
 
-app.get('/', (req, res) => {
-    res.redirect('/admissions/ug/updates');
-});
-
 app.get('/health-check', (req, res) => {
     res.send('OK');
 });
 
-app.get('/admissions', (req, res) => {
-    res.redirect('/admissions/ug/updates');
+app.get('/', (req, res) => {
+    res.redirect('/admissions/ug/updates/all');
 });
 
 app.use('/admissions/ug/updates', ugUpdateRoutes);
