@@ -1,25 +1,25 @@
 const ugUpdate = require('../models/ugUpdate');
 
 const ug_update_list = (req, res, enabled) => {
-    ugUpdate.find({ enabled: enabled })
+    if (enabled === null) {
+        filter = {};
+    }
+    else {
+        filter = { enabled: enabled };
+    }
+
+    ugUpdate.find(filter)
         .sort({ updatedAt: -1 })
         .then((result) => {
-            console.log(result);
             res.json(result);
         })
         .catch((err) => {
             console.log(err);
         });
 };
+
 const ug_update_list_all = (req, res) => {
-    ugUpdate.find()
-        .sort({ updatedAt: -1 })
-        .then((result) => {
-            res.json(result);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+    ug_update_list(req, res, null);
 };
 
 const ug_update_list_enabled = (req, res) => {
@@ -30,7 +30,7 @@ const ug_update_list_disabled = (req, res) => {
     ug_update_list(req, res, false);
 };
 
-const ug_update_create_post = (req, res) => {
+const ug_update_create = (req, res) => {
     const update = new ugUpdate(req.body);
 
     update.save()
@@ -89,11 +89,10 @@ const ug_update_patch = (req, res) => {
 };
 
 module.exports = {
-    ug_update_list,
     ug_update_list_all,
     ug_update_list_enabled,
     ug_update_list_disabled,
-    ug_update_create_post,
+    ug_update_create,
     ug_update_details,
     ug_update_delete,
     ug_update_patch
