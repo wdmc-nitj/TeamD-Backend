@@ -15,7 +15,8 @@ const updateSchema = new Schema({
     },
     degree: {
         type: String,
-        required: true
+        required: true,
+        enum: ['BTECH', 'MTECH-CCMT', 'MTECH-SELF', 'MSC', 'MBA', 'PHD', 'FOREIGN']
     }
 }, { timestamps: true });
 
