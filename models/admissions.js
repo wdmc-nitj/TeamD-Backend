@@ -20,7 +20,7 @@ const updateSchema = new Schema({
     }
 }, { timestamps: true });
 
-const update = mongoose.model('update', updateSchema);
+const update = mongoose.model('admissionUpdate', updateSchema);
 module.exports = {
     update
 }

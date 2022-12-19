@@ -6,15 +6,17 @@ const admissionsRoutes = require('./routes/admissionsRoutes');
 // Environment variables for database username and password
 const dbUser = process.env.atlasUser;
 const dbPass = process.env.atlasPassword;
-const dbName = 'admissions';
-const dbURI = `mongodb+srv://${dbUser}:${dbPass}@cluster0.5swxwob.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+const clusterName = process.env.atlasClusterName;
+const dbName = process.env.atlasDBName;
+const dbURI = `mongodb+srv://${dbUser}:${dbPass}@${clusterName}/${dbName}?retryWrites=true&w=majority`;
 
 // express app
 const app = express();
 
 // connect to MongoDB
 mongoose.connect(dbURI)
-    .then((resutlt) => {
+    .then((result) => {
+        console.log('Connected to MongoDB');
         app.listen(3000);
     })
     .catch((err) => {
