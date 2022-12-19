@@ -1,36 +1,41 @@
-const ugUpdate = require('../models/admissionUpdate');
+const admissionUpdate = require('../models/admissions')['update'];
+
+
+const sendError = (res, err) => {
+    // used to send error to client and console
+    console.log(err);
+    res.status(404).json(err);
+};
 
 const ug_update_list = (req, res) => {
-    let filter = {};
+    let filter = { degree: req.params.degree };
 
     if (req.params.toggle === 'enabled') {
         filter.enabled = true;
     }
-    else if (req.params.toggle === 'disabled'){   
+    else if (req.params.toggle === 'disabled') {
         filter.enabled = false;
     }
 
-    ugUpdate.find(filter)
+    admissionUpdate.find(filter)
         .sort({ updatedAt: -1 })
         .then((result) => {
             res.json(result);
         })
         .catch((err) => {
-            console.log(err);
-            res.json(err);
+            sendError(res, err);
         });
 };
 
 const ug_update_create = (req, res) => {
-    const update = new ugUpdate(req.body);
+    const update = new admissionUpdate(req.body);
 
     update.save()
         .then((result) => {
-            res.send(result)
+            res.json(result)
         })
         .catch((err) => {
-            console.log(err);
-            res.json(err);
+            sendError(res, err);
         });
 };
 
@@ -38,32 +43,30 @@ const ug_update_create = (req, res) => {
 const ug_update_details = (req, res) => {
     const id = req.params.id;
     // check ID validity
-    ugUpdate.findById(id)
+    admissionUpdate.findById(id)
         .then((result) => {
             res.json(result);
         })
         .catch((err) => {
-            console.log(err);
-            res.json(err);
+            sendError(res, err);
         });
 };
 
 const ug_update_delete = (req, res) => {
     const id = req.params.id;
-    ugUpdate.findByIdAndDelete(id)
+    admissionUpdate.findByIdAndDelete(id)
         .then((result) => {
             res.json(result);
         })
         .catch((err) => {
-            console.log(err);
-            res.json(err);
+            sendError(res, err);
         });
 };
 
 const ug_update_patch = (req, res) => {
     const id = req.params.id;
     req.body.updatedAt = Date.now();
-    ugUpdate.updateOne(
+    admissionUpdate.updateOne(
         {
             _id: id
         },
@@ -79,8 +82,7 @@ const ug_update_patch = (req, res) => {
             res.json(result);
         })
         .catch((err) => {
-            console.log(err);
-            res.json(err);
+            sendError(res, err);
         });
 };
 
