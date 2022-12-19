@@ -42,7 +42,7 @@ const ug_update_create = (req, res) => {
 
 const ug_update_details = (req, res) => {
     const id = req.params.id;
-    // check ID validity
+    
     admissionUpdate.findById(id)
         .then((result) => {
             res.json(result);
