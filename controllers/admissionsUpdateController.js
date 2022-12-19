@@ -1,11 +1,13 @@
-const ugUpdate = require('../models/ugUpdate');
+const ugUpdate = require('../models/admissionUpdate');
 
-const ug_update_list = (req, res, enabled) => {
-    if (enabled === null) {
-        filter = {};
+const ug_update_list = (req, res) => {
+    let filter = {};
+
+    if (req.params.toggle === 'enabled') {
+        filter.enabled = true;
     }
-    else {
-        filter = { enabled: enabled };
+    else if (req.params.toggle === 'disabled'){   
+        filter.enabled = false;
     }
 
     ugUpdate.find(filter)
@@ -15,19 +17,8 @@ const ug_update_list = (req, res, enabled) => {
         })
         .catch((err) => {
             console.log(err);
+            res.json(err);
         });
-};
-
-const ug_update_list_all = (req, res) => {
-    ug_update_list(req, res, null);
-};
-
-const ug_update_list_enabled = (req, res) => {
-    ug_update_list(req, res, true);
-};
-
-const ug_update_list_disabled = (req, res) => {
-    ug_update_list(req, res, false);
 };
 
 const ug_update_create = (req, res) => {
@@ -39,6 +30,7 @@ const ug_update_create = (req, res) => {
         })
         .catch((err) => {
             console.log(err);
+            res.json(err);
         });
 };
 
@@ -52,6 +44,7 @@ const ug_update_details = (req, res) => {
         })
         .catch((err) => {
             console.log(err);
+            res.json(err);
         });
 };
 
@@ -63,11 +56,13 @@ const ug_update_delete = (req, res) => {
         })
         .catch((err) => {
             console.log(err);
+            res.json(err);
         });
 };
 
 const ug_update_patch = (req, res) => {
     const id = req.params.id;
+    req.body.updatedAt = Date.now();
     ugUpdate.updateOne(
         {
             _id: id
@@ -85,13 +80,12 @@ const ug_update_patch = (req, res) => {
         })
         .catch((err) => {
             console.log(err);
+            res.json(err);
         });
 };
 
 module.exports = {
-    ug_update_list_all,
-    ug_update_list_enabled,
-    ug_update_list_disabled,
+    ug_update_list,
     ug_update_create,
     ug_update_details,
     ug_update_delete,

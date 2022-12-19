@@ -1,8 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
-const ugUpdateRoutes = require('./routes/ugUpdateRoutes');
-const ugUpdateApiRoutes = require('./routes/ugUpdateApiRoutes');
+const admissionsApiRoutes = require('./routes/admissionsRoutes');
 
 // Environment variables for database username and password
 const dbUser = process.env.atlasUser;
@@ -34,18 +33,8 @@ app.get('/health-check', (req, res) => {
     res.send('OK');
 });
 
-app.get('/', (req, res) => {
-    res.redirect('/admissions/ug/updates/all');
-});
-
-app.use('/admissions/ug/updates', ugUpdateRoutes);
-app.use('/api/admissions/ug/updates', ugUpdateApiRoutes);
+app.use('/admissions', admissionsApiRoutes);
 
 app.use((req, res) => {
-    res.status(404).render('404');;
-});
-
-//create new route for 404 page
-app.get('*', (req, res) => {
-    res.status(404).render('404');
+    res.status(404).send('Invalid URL');;
 });

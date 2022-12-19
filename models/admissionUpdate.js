@@ -12,6 +12,10 @@ const ugUpdateSchema = new Schema({
     enabled: {
         type: Boolean,
         default: true
+    },
+    degree: {
+        type: String,
+        required: true
     }
 }, { timestamps: true });
 
