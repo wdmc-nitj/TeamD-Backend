@@ -16,7 +16,6 @@ const app = express();
 // connect to MongoDB
 mongoose.connect(dbURI)
     .then((result) => {
-        console.log('Connected to MongoDB');
         app.listen(3000);
     })
     .catch((err) => {

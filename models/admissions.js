@@ -21,6 +21,7 @@ const updateSchema = new Schema({
 }, { timestamps: true });
 
 const update = mongoose.model('admissionUpdate', updateSchema);
+
 module.exports = {
     update
 }
