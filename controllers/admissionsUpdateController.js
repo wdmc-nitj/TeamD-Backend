@@ -4,92 +4,76 @@ const admissionUpdate = require('../models/admissions')['update'];
 const sendError = (res, err) => {
     // used to send error to client and console
     console.log(err);
-    res.status(404).json(err);
+    res.status(404).send('Error: ' + err);
 };
 
-const ug_update_list = (req, res) => {
-    let filter = { degree: req.params.degree };
+const createUpdate = (req, res) => {
+    const update = new admissionUpdate(req.body);
 
-    if (req.params.toggle === 'enabled') {
-        filter.enabled = true;
+    update.save()
+        .then((createdUpdate) => res.json(createdUpdate))
+        .catch((err) => sendError(res, err));
+};
+
+const getUpdates = (req, res) => {
+    let filter = {};
+
+    if(!req.params.degree === 'all') {
+        filter.degree = req.params.degree;
     }
-    else if (req.params.toggle === 'disabled') {
-        filter.enabled = false;
+
+    if (req.params.visible === 'visible') {
+        filter.visible = true;
+    }
+    else if (req.params.visible === 'hidden') {
+        filter.visible = false;
     }
 
     admissionUpdate.find(filter)
         .sort({ updatedAt: -1 })
-        .then((result) => {
-            res.json(result);
-        })
-        .catch((err) => {
-            sendError(res, err);
-        });
+        .then((updates) => res.json(updates))
+        .catch((err) => sendError(res, err));
 };
 
-const ug_update_create = (req, res) => {
-    const update = new admissionUpdate(req.body);
-
-    update.save()
-        .then((result) => {
-            res.json(result)
-        })
-        .catch((err) => {
-            sendError(res, err);
-        });
-};
-
-
-const ug_update_details = (req, res) => {
+const getUpdateById = (req, res) => {
     const id = req.params.id;
-    
+
     admissionUpdate.findById(id)
-        .then((result) => {
-            res.json(result);
-        })
-        .catch((err) => {
-            sendError(res, err);
-        });
+        .then((update) => res.json(update))
+        .catch((err) => sendError(res, err));
 };
 
-const ug_update_delete = (req, res) => {
+const editUpdate = (req, res) => {
     const id = req.params.id;
-    admissionUpdate.findByIdAndDelete(id)
-        .then((result) => {
-            res.json(result);
-        })
-        .catch((err) => {
-            sendError(res, err);
-        });
-};
 
-const ug_update_patch = (req, res) => {
-    const id = req.params.id;
     req.body.updatedAt = Date.now();
-    admissionUpdate.updateOne(
-        {
-            _id: id
-        },
-        req.body)
-        .then((result) => {
-            if (req.body.enabled === 'true') {
-                destination = 'disabled';
-            }
-            else {
-                destination = 'all';
-            }
+    admissionUpdate.updateOne({ _id: id }, req.body)
+        .then((result) => res.json(result))
+        .catch((err) => sendError(res, err));
+};
 
-            res.json(result);
-        })
-        .catch((err) => {
-            sendError(res, err);
-        });
+const hideUpdate = (req, res) => {
+    const id = req.params.id;
+
+    admissionUpdate.updateOne({ _id: id }, { visible: false })
+        .then((result) => res.json(result))
+        .catch((err) => sendError(res, err));
+};
+
+const deleteUpdate = (req, res) => {
+    const id = req.params.id;
+
+    admissionUpdate.findByIdAndDelete(id)
+        .then((deletedUpdate) => res.json(deletedUpdate))
+        .catch((err) => sendError(res, err));
 };
 
 module.exports = {
-    ug_update_list,
-    ug_update_create,
-    ug_update_details,
-    ug_update_delete,
-    ug_update_patch
+    createUpdate,
+    getUpdates,
+    getUpdateById,
+    editUpdate,
+    hideUpdate,
+    deleteUpdate,
+    
 };
