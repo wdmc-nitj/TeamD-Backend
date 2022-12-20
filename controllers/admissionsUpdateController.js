@@ -18,7 +18,7 @@ const createUpdate = (req, res) => {
 const getUpdates = (req, res) => {
     let filter = {};
 
-    if(!req.params.degree === 'all') {
+    if(req.params.degree !== 'all') {
         filter.degree = req.params.degree;
     }
 
