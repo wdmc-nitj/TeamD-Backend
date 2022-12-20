@@ -1,11 +1,18 @@
 const express = require('express');
-const updatesRouter = express.Router();
-const ugUpdateController = require('../../controllers/admissionsUpdateController');
+const updatesController = require('../../controllers/admissionsUpdateController');
 
-updatesRouter.get(`/:degree/:toggle`, ugUpdateController.ug_update_list); // enabled/disabled/all
-updatesRouter.post(`/create`, ugUpdateController.ug_update_create);
-updatesRouter.get(`/:id`, ugUpdateController.ug_update_details);
-updatesRouter.delete(`/:id`, ugUpdateController.ug_update_delete);
-updatesRouter.patch(`/:id`, ugUpdateController.ug_update_patch);
+// router for /admissions/updates
+const updatesRouter = express.Router();
+
+
+updatesRouter.route('/create').post(updatesController.createUpdate);
+
+updatesRouter.route('/:degree/:visible').get(updatesController.getUpdates); // visible can be 'visible', 'hidden' or 'all'
+
+updatesRouter.route('/:id')
+    .get(updatesController.getUpdateById)
+    .patch(updatesController.editUpdate)
+    .delete(updatesController.hideUpdate)
+    .put(updatesController.deleteUpdate);
 
 module.exports = updatesRouter;

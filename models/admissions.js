@@ -9,7 +9,7 @@ const updateSchema = new Schema({
     link: {
         type: String
     },
-    enabled: {
+    visible: {
         type: Boolean,
         default: true
     },
