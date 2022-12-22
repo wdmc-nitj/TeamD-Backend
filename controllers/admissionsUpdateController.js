@@ -1,10 +1,20 @@
 const admissionUpdate = require('../models/admissions')['update'];
+const mongoose = require('mongoose');
 
 
 const sendError = (res, err) => {
     // used to send error to client and console
     console.log(err);
     res.status(404).send('Error: ' + err);
+};
+
+const validateID = (id) => {
+    // used to validate id
+    const isValid = mongoose.Types.ObjectId.isValid(id);
+    if (!isValid) {
+        return Promise.reject('Invalid ID');
+    }
+    return Promise.resolve();
 };
 
 const createUpdate = (req, res) => {
@@ -37,35 +47,47 @@ const getUpdates = (req, res) => {
 
 const getUpdateById = (req, res) => {
     const id = req.params.id;
-
-    admissionUpdate.findById(id)
+    validateID(id).then(() => 
+    {
+        admissionUpdate.findById(id)
         .then((update) => res.json(update))
         .catch((err) => sendError(res, err));
+    })
+    .catch((err) => sendError(res, err));    
 };
 
 const editUpdate = (req, res) => {
     const id = req.params.id;
-
-    req.body.updatedAt = Date.now();
-    admissionUpdate.updateOne({ _id: id }, req.body)
+    validateID(id).then(() => 
+    {
+        req.body.updatedAt = Date.now();
+        admissionUpdate.updateOne({ _id: id }, req.body) 
         .then((result) => res.json(result))
         .catch((err) => sendError(res, err));
+    })
+    .catch((err) => sendError(res, err));
 };
 
 const hideUpdate = (req, res) => {
     const id = req.params.id;
-
-    admissionUpdate.updateOne({ _id: id }, { visible: false })
-        .then((result) => res.json(result))
+    validateID(id).then(() => 
+    {
+        admissionUpdate.findById(id)
+        .then((update) => res.json(update))
         .catch((err) => sendError(res, err));
+    })
+    .catch((err) => sendError(res, err));
 };
 
 const deleteUpdate = (req, res) => {
     const id = req.params.id;
-
-    admissionUpdate.findByIdAndDelete(id)
+    validateID(id).then(() => 
+    {
+        admissionUpdate.findByIdAndDelete(id)
         .then((deletedUpdate) => res.json(deletedUpdate))
         .catch((err) => sendError(res, err));
+    })
+    .catch((err) => sendError(res, err));
 };
 
 module.exports = {
