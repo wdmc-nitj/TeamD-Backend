@@ -5,14 +5,15 @@ const mongoose = require('mongoose');
 const sendError = (res, err) => {
     // used to send error to client and console
     console.log(err);
-    res.status(404).send('Error: ' + err);
+    res.status(404).json('Error: ' + err);
 };
 
 const validateID = (id) => {
     // used to validate id
-    const isValid = mongoose.Types.ObjectId.isValid(id);
-    if (!isValid) {
-        return Promise.reject('Invalid ID');
+    const isValidId = mongoose.Types.ObjectId.isValid(id);
+    if (!isValidId) {
+        // return the error as string to be used in catch
+        return Promise.reject('Invalid ID, must be 12 bytes or a string of 24 hex characters');
     }
     return Promise.resolve();
 };
