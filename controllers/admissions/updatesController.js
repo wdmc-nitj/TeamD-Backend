@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const sendError = (res, err) => {
     // used to send error to client and console
     console.log(err);
-    res.status(404).json('Error: ' + err);
+    res.status(404).json(err);
 };
 
 const validateID = (id) => {
@@ -35,8 +35,7 @@ const getUpdates = (req, res) => {
 
     if (req.params.visible === 'visible') {
         filter.visible = true;
-    }
-    else if (req.params.visible === 'hidden') {
+    } else if (req.params.visible === 'hidden') {
         filter.visible = false;
     }
 
@@ -70,8 +69,8 @@ const editUpdate = (req, res) => {
 const hideUpdate = (req, res) => {
     const id = req.params.id;
     validateID(id).then(() => {
-        admissionUpdate.findById(id)
-            .then((update) => res.json(update))
+        admissionUpdate.findByIdAndUpdate(id, { visible: false }, { new: true })
+            .then((result) => res.json(result))
             .catch((err) => sendError(res, err));
     })
         .catch((err) => sendError(res, err));
@@ -93,6 +92,5 @@ module.exports = {
     getUpdateById,
     editUpdate,
     hideUpdate,
-    deleteUpdate,
-
+    deleteUpdate
 };

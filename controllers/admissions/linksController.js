@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const sendError = (res, err) => {
     // used to send error to client and console
     console.log(err);
-    res.status(404).json('Error: ' + err);
+    res.status(404).json(err);
 }
 
 const validateID = (id) => {
@@ -30,8 +30,7 @@ const getLinks = (req, res) => {
 
     if (req.params.visible === 'visible') {
         filter.visible = true;
-    }
-    else if (req.params.visible === 'hidden') {
+    } else if (req.params.visible === 'hidden') {
         filter.visible = false;
     }
 
