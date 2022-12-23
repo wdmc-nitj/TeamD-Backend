@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const sendError = (res, err) => {
     // used to send error to client and console
     console.log(err);
-    res.status(404).json(err);
+    res.status(400).json(String(err));
 }
 
 const validateID = (id) => {
@@ -21,7 +21,7 @@ const createLink = (req, res) => {
     const link = new admissionLink(req.body);
 
     link.save()
-        .then((createdLink) => res.json(createdLink))
+        .then((createdLink) => res.status(201).json(createdLink))
         .catch((err) => sendError(res, err));
 }
 
