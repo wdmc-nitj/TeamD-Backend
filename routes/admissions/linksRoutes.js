@@ -6,12 +6,14 @@ const linksController = require('../../controllers/admissions/linksController');
 
 linksRouter.route('/create').post(linksController.createLink);
 
-linksRouter.route('/:visible').get(linksController.getLinks); // visible can be 'visible', 'hidden' or 'all'
-
 linksRouter.route('/id/:id')
     .get(linksController.getLinkById)
     .patch(linksController.editLink)
     .delete(linksController.hideLink)
     .put(linksController.deleteLink);
+
+linksRouter.route('/:visible').get(linksController.getLinks); // visible can be 'visible', 'hidden' or 'all'
+
+
 
 module.exports = linksRouter;

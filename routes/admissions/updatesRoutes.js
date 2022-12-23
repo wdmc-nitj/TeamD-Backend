@@ -6,12 +6,12 @@ const updatesController = require('../../controllers/admissions/updatesControlle
 
 updatesRouter.route('/create').post(updatesController.createUpdate);
 
-updatesRouter.route('/:degree/:visible').get(updatesController.getUpdates); // visible can be 'visible', 'hidden' or 'all'
-
-updatesRouter.route('/:id')
+updatesRouter.route('/id/:id')
     .get(updatesController.getUpdateById)
     .patch(updatesController.editUpdate)
     .delete(updatesController.hideUpdate)
     .put(updatesController.deleteUpdate);
+
+updatesRouter.route('/:degree/:visible').get(updatesController.getUpdates); // visible can be 'visible', 'hidden' or 'all'
 
 module.exports = updatesRouter;
