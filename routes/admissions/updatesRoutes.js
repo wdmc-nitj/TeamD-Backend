@@ -1,8 +1,7 @@
-const express = require('express');
-const updatesController = require('../../controllers/admissionsUpdateController');
-
 // router for /admissions/updates
-const updatesRouter = express.Router();
+const updatesRouter = require('express').Router();
+
+const updatesController = require('../../controllers/admissions/updatesController');
 
 
 updatesRouter.route('/create').post(updatesController.createUpdate);

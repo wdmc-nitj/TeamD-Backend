@@ -1,4 +1,4 @@
-const admissionUpdate = require('../models/admissions')['update'];
+const admissionUpdate = require('../../models/admissions').update;
 const mongoose = require('mongoose');
 
 
@@ -29,7 +29,7 @@ const createUpdate = (req, res) => {
 const getUpdates = (req, res) => {
     let filter = {};
 
-    if(req.params.degree !== 'all') {
+    if (req.params.degree !== 'all') {
         filter.degree = req.params.degree;
     }
 
@@ -48,47 +48,43 @@ const getUpdates = (req, res) => {
 
 const getUpdateById = (req, res) => {
     const id = req.params.id;
-    validateID(id).then(() => 
-    {
+    validateID(id).then(() => {
         admissionUpdate.findById(id)
-        .then((update) => res.json(update))
-        .catch((err) => sendError(res, err));
+            .then((update) => res.json(update))
+            .catch((err) => sendError(res, err));
     })
-    .catch((err) => sendError(res, err));    
+        .catch((err) => sendError(res, err));
 };
 
 const editUpdate = (req, res) => {
     const id = req.params.id;
-    validateID(id).then(() => 
-    {
+    validateID(id).then(() => {
         req.body.updatedAt = Date.now();
-        admissionUpdate.updateOne({ _id: id }, req.body) 
-        .then((result) => res.json(result))
-        .catch((err) => sendError(res, err));
+        admissionUpdate.findByIdAndUpdate(id, req.body, { new: true })
+            .then((result) => res.json(result))
+            .catch((err) => sendError(res, err));
     })
-    .catch((err) => sendError(res, err));
+        .catch((err) => sendError(res, err));
 };
 
 const hideUpdate = (req, res) => {
     const id = req.params.id;
-    validateID(id).then(() => 
-    {
+    validateID(id).then(() => {
         admissionUpdate.findById(id)
-        .then((update) => res.json(update))
-        .catch((err) => sendError(res, err));
+            .then((update) => res.json(update))
+            .catch((err) => sendError(res, err));
     })
-    .catch((err) => sendError(res, err));
+        .catch((err) => sendError(res, err));
 };
 
 const deleteUpdate = (req, res) => {
     const id = req.params.id;
-    validateID(id).then(() => 
-    {
+    validateID(id).then(() => {
         admissionUpdate.findByIdAndDelete(id)
-        .then((deletedUpdate) => res.json(deletedUpdate))
-        .catch((err) => sendError(res, err));
+            .then((deletedUpdate) => res.json(deletedUpdate))
+            .catch((err) => sendError(res, err));
     })
-    .catch((err) => sendError(res, err));
+        .catch((err) => sendError(res, err));
 };
 
 module.exports = {
@@ -98,5 +94,5 @@ module.exports = {
     editUpdate,
     hideUpdate,
     deleteUpdate,
-    
+
 };

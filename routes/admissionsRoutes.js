@@ -1,7 +1,11 @@
-const express = require('express');
-const router = express.Router();
-const admissionsUpdateRouter = require('./admissions/admissionUpdatesRoutes');
+// router for /admissions
+const admissionsRouter = require('express').Router();
 
-router.use('/updates', admissionsUpdateRouter);
+const admissionsLinkRouter = require('./admissions/linksRoutes');
+const admissionsUpdateRouter = require('./admissions/updatesRoutes');
 
-module.exports = router;
+
+admissionsRouter.use('/links', admissionsLinkRouter);
+admissionsRouter.use('/updates', admissionsUpdateRouter);
+
+module.exports = admissionsRouter;
