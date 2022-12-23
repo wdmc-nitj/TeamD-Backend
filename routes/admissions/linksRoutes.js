@@ -15,5 +15,4 @@ linksRouter.route('/id/:id')
 linksRouter.route('/:visible').get(linksController.getLinks); // visible can be 'visible', 'hidden' or 'all'
 
 
-
 module.exports = linksRouter;
