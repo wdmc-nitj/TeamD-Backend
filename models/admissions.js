@@ -20,8 +20,25 @@ const updateSchema = new Schema({
     }
 }, { timestamps: true });
 
+const linkSchema = new Schema({
+    title: {
+        type: String,
+        required: true
+    },
+    link: {
+        type: String,
+        required: true
+    },
+    visible: {
+        type: Boolean,
+        default: true
+    },
+}, { timestamps: true });
+
 const update = mongoose.model('admissionUpdate', updateSchema);
+const link = mongoose.model('admissionLink', linkSchema);
 
 module.exports = {
-    update
+    update,
+    link
 }
