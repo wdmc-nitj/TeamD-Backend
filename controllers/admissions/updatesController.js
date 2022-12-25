@@ -42,7 +42,7 @@ const editUpdate = (req, res) => {
     const id = req.params.id;
     validateID(id).then(() => {
         req.body.updatedAt = Date.now();
-        admissionUpdate.findByIdAndUpdate(id, req.body, { new: true })
+        admissionUpdate.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
             .then((result) => res.json(result))
             .catch((err) => sendError(res, err));
     })

@@ -1,9 +1,11 @@
+const mongoose = require('mongoose');
+
 // Description: contains functions that are used in multiple files
 
 const sendError = (res, err) => {
     // used to send error to client and console
     console.log(err);
-    res.status(400).json(String(err));
+    res.status(400).json(err);
 };
 
 const validateID = (id) => {

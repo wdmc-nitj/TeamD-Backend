@@ -44,7 +44,8 @@ const editHelpline = (req, res) => {
     const id = req.params.id;
     validateID(id).then(() =>
     {
-        admissionHelpline.findByIdAndUpdate(id, req.body, { new: true })
+        req.body.updatedAt = Date.now();
+        admissionHelpline.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
             .then((helpline) => res.json(helpline))
             .catch((err) => sendError(res, err));
     })
