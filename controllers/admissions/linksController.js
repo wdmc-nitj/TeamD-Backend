@@ -1,21 +1,5 @@
 const admissionLink = require('../../models/admissions').link;
-const mongoose = require('mongoose');
-
-const sendError = (res, err) => {
-    // used to send error to client and console
-    console.log(err);
-    res.status(400).json(String(err));
-}
-
-const validateID = (id) => {
-    // used to validate id
-    const isValidId = mongoose.Types.ObjectId.isValid(id);
-    if (!isValidId) {
-        // return the error as string to be used in catch
-        return Promise.reject('Invalid ID, must be 12 bytes or a string of 24 hex characters');
-    }
-    return Promise.resolve();
-}
+const { sendError, validateID } = require('../../myFuncs');
 
 const createLink = (req, res) => {
     const link = new admissionLink(req.body);
