@@ -1,6 +1,6 @@
 const express = require('express');
 const RefereedResearchRouter = express.Router();
-const refereedResearchController = require('../../controllers/research/refreedResearchController');
+const refereedResearchController = require('../../controllers/research/refereedResearchController');
 
 // routes for /research/publications/refreedResearch
 RefereedResearchRouter.route('/create')
