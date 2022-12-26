@@ -1,5 +1,5 @@
 const { sendError, validateID } = require('../../utils');
-const RefereedResearch = require('../../models/researchPublications').RefereedResearch;
+const RefereedResearch = require('../../models//research/researchPublications').RefereedResearch;
 
 // GET all refereed researches
 const getAllRefereedResearches = (req, res, next) => {

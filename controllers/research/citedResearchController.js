@@ -1,4 +1,4 @@
-const CitedResearch = require('../../models/researchPublications').CitedResearch;
+const CitedResearch = require('../../models//research/researchPublications').CitedResearch;
 const { sendError, validateID } = require('../../utils');
 
 // GET all cited researches
