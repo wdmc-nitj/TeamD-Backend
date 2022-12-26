@@ -13,4 +13,7 @@ researchRouter.use('/consultancy', consultancyRouter);
 const upcomingEventRouter = require('./research/upcomingEventRoutes');
 researchRouter.use('/upcomingEvents', upcomingEventRouter);
 
+const sponsoredProjectsRouter = require('./research/sponsoredProjectsRoutes');
+researchRouter.use('/sponsoredProjects', sponsoredProjectsRouter);
+
 module.exports = researchRouter;
