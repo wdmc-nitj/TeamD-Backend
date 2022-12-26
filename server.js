@@ -1,7 +1,11 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+
 const admissionsRoutes = require('./routes/admissionsRoutes');
+const MoURoutes = require('./routes/MoURoutes');
+const researchRoutes = require('./routes/researchRoutes');
+const recruitmentsRoutes = require('./routes/recruitmentsRoutes');
 
 // Environment variables for database username and password
 const dbUser = process.env.atlasUser;
@@ -30,5 +34,8 @@ app.use(morgan('dev'));
 app.get('/health-check', (req, res) => res.send('OK'));
 
 app.use('/admissions', admissionsRoutes);
+app.use('/MoU', MoURoutes);
+app.use('/research', researchRoutes);
+app.use('/recruitments', recruitmentsRoutes);
 
 app.use((req, res) => res.status(404).send('404 Not Found'));

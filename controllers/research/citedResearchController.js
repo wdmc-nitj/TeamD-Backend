@@ -1,0 +1,95 @@
+const CitedResearch = require('../../models//research/researchPublications').CitedResearch;
+const { sendError, validateID } = require('../../utils');
+
+// GET all cited researches
+const getAllCitedResearches = (req, res, next) => {
+    // filter by req.params.visible if it is not 'all'
+    let filter = {};
+
+    if (req.params.visible === 'visible') {
+        filter.visible = true;
+    }
+    else if (req.params.visible === 'hidden') {
+        filter.visible = false;
+    } else if (req.params.visible !== 'all') {
+        return sendError(res, `Invalid value for visible: ${req.params.visible}`);
+    }
+
+    CitedResearch
+        .find(filter)
+        .then((citedResearches) => res.json(citedResearches))
+        .catch((err) => sendError(res, err));
+};
+
+// GET top 10 cited researches
+const getTop10CitedResearches = (req, res) => {
+    CitedResearch
+        .find({ visible: true })
+        .sort({ 'cites.number': -1 })
+        .limit(10)
+        .then((citedResearches) => res.json(citedResearches))
+        .catch((err) => sendError(res, err));
+};
+
+// GET cited research by id
+const getCitedResearchById = (req, res) => {
+    const id = req.params.id;
+    validateID(id)
+        .then(() => CitedResearch.findById(id))
+        .then((citedResearch) => res.json(citedResearch))
+        .catch((err) => sendError(res, err));
+};
+
+// POST create new cited research
+const createCitedResearch = (req, res) => {
+    const newCitedResearch = new CitedResearch(req.body);
+
+    newCitedResearch.save()
+        .then((createdCitedResearch) => res.status(201).json(createdCitedResearch))
+        .catch((err) => sendError(res, err));
+};
+
+// PATCH edit cited research
+const editCitedResearch = (req, res) => {
+    const id = req.params.id;
+
+    validateID(id)
+        .then(() => {
+            req.body.updatedAt = Date.now();
+            CitedResearch.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
+                .then((updatedCitedResearch) => res.json(updatedCitedResearch))
+                .catch((err) => sendError(res, err));
+        })
+        .catch((err) => sendError(res, err));
+};
+
+// DELETE hide cited research
+const hideCitedResearch = (req, res) => {
+    const id = req.params.id;
+
+    validateID(id)
+        .then(() => CitedResearch
+            .findByIdAndUpdate(id, { visible: false }, { new: true }))
+        .then((updatedCitedResearch) => res.json(updatedCitedResearch))
+        .catch((err) => sendError(res, err));
+};
+
+// PUT delete cited research
+const deleteCitedResearch = (req, res) => {
+    const id = req.params.id;
+
+    validateID(id)
+        .then(() => CitedResearch.findByIdAndDelete(id))
+        .then((deletedCitedResearch) => res.json(deletedCitedResearch))
+        .catch((err) => sendError(res, err));
+};
+
+module.exports = {
+    getAllCitedResearches,
+    getTop10CitedResearches,
+    getCitedResearchById,
+    createCitedResearch,
+    editCitedResearch,
+    hideCitedResearch,
+    deleteCitedResearch,
+};

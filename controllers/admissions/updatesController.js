@@ -1,28 +1,11 @@
 const admissionUpdate = require('../../models/admissions').update;
-const mongoose = require('mongoose');
-
-
-const sendError = (res, err) => {
-    // used to send error to client and console
-    console.log(err);
-    res.status(404).json(err);
-};
-
-const validateID = (id) => {
-    // used to validate id
-    const isValidId = mongoose.Types.ObjectId.isValid(id);
-    if (!isValidId) {
-        // return the error as string to be used in catch
-        return Promise.reject('Invalid ID, must be 12 bytes or a string of 24 hex characters');
-    }
-    return Promise.resolve();
-};
+const { sendError, validateID } = require('../../utils');
 
 const createUpdate = (req, res) => {
     const update = new admissionUpdate(req.body);
 
     update.save()
-        .then((createdUpdate) => res.json(createdUpdate))
+        .then((createdUpdate) => res.status(201).json(createdUpdate))
         .catch((err) => sendError(res, err));
 };
 
@@ -59,7 +42,7 @@ const editUpdate = (req, res) => {
     const id = req.params.id;
     validateID(id).then(() => {
         req.body.updatedAt = Date.now();
-        admissionUpdate.findByIdAndUpdate(id, req.body, { new: true })
+        admissionUpdate.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
             .then((result) => res.json(result))
             .catch((err) => sendError(res, err));
     })
