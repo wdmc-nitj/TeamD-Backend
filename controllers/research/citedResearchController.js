@@ -1,5 +1,5 @@
-const CitedResearch = require('../../models/publications').CitedResearch;
-const { sendError, validateID } = require('../../myFuncs');
+const CitedResearch = require('../../models/researchPublications').CitedResearch;
+const { sendError, validateID } = require('../../utils');
 
 // GET all cited researches
 const getAllCitedResearches = (req, res, next) => {

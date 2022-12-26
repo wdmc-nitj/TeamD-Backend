@@ -1,8 +1,8 @@
 const express = require('express');
 const citedResearchRouter = express.Router();
-const citedResearchController = require('../../controllers/publications/citedResearchController');
+const citedResearchController = require('../../controllers/research/citedResearchController');
 
-// routes for /publications/citedReasearch
+// routes for /research/publications/citedReasearch
 citedResearchRouter.route('/create')
     .post(citedResearchController.createCitedResearch);
 

@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const admissionsRoutes = require('./routes/admissionsRoutes');
 const MoURoutes = require('./routes/MoURoutes');
-const publicationsRoutes = require('./routes/publicationsRoutes');
+const researchRoutes = require('./routes/researchRoutes');
 
 // Environment variables for database username and password
 const dbUser = process.env.atlasUser;
@@ -34,6 +34,6 @@ app.get('/health-check', (req, res) => res.send('OK'));
 
 app.use('/admissions', admissionsRoutes);
 app.use('/MoU', MoURoutes);
-app.use('/publications', publicationsRoutes);
+app.use('/research', researchRoutes);
 
 app.use((req, res) => res.status(404).send('404 Not Found'));

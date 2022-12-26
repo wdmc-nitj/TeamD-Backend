@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const URL = require('url').URL;
 
 
 const stringValidator = {
@@ -123,7 +122,8 @@ const refereedResearchSchema = new Schema({
     description: {  // description of the research
         type: String,
         required: true,
-        notEmpty: true
+        notEmpty: true,
+        validate: stringValidator
     },
     link: {     // link to the research
         type: String,
