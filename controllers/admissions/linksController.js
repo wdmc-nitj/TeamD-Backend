@@ -1,5 +1,5 @@
 const admissionLink = require('../../models/admissions').link;
-const { sendError, validateID } = require('../../myFuncs');
+const { sendError, validateID } = require('../../utils');
 
 const createLink = (req, res) => {
     const link = new admissionLink(req.body);
@@ -27,49 +27,45 @@ const getLinks = (req, res) => {
 const getLinkById = (req, res) => {
 
     const id = req.params.id;
-    validateID(id).then(() => 
-    {
+    validateID(id).then(() => {
         admissionLink.findById(id)
-        .then((link) => res.json(link))
-        .catch((err) => sendError(res, err));
+            .then((link) => res.json(link))
+            .catch((err) => sendError(res, err));
     })
-    .catch((err) => sendError(res, err));
+        .catch((err) => sendError(res, err));
 }
 
 const editLink = (req, res) => {
 
     const id = req.params.id;
-    validateID(id).then(() => 
-    {
+    validateID(id).then(() => {
         req.body.updatedAt = Date.now();
         admissionLink.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
             .then((updatedLink) => res.json(updatedLink))
             .catch((err) => sendError(res, err));
     })
-    .catch((err) => sendError(res, err));
+        .catch((err) => sendError(res, err));
 }
 
 const hideLink = (req, res) => {
 
     const id = req.params.id;
-    validateID(id).then(() =>
-    {
+    validateID(id).then(() => {
         admissionLink.findByIdAndUpdate(id, { visible: false }, { new: true, runValidators: true })
             .then((updatedLink) => res.json(updatedLink))
             .catch((err) => sendError(res, err));
     })
-    .catch((err) => sendError(res, err));
+        .catch((err) => sendError(res, err));
 }
 
 const deleteLink = (req, res) => {
-    
-        const id = req.params.id;
-        validateID(id).then(() => 
-        {
-            admissionLink.findByIdAndDelete(id)
+
+    const id = req.params.id;
+    validateID(id).then(() => {
+        admissionLink.findByIdAndDelete(id)
             .then((deletedLink) => res.json(deletedLink))
             .catch((err) => sendError(res, err));
-        })
+    })
         .catch((err) => sendError(res, err));
 }
 

@@ -1,5 +1,5 @@
 const admissionHelpline = require('../../models/admissions').helpline;
-const { sendError, validateID } = require('../../myFuncs');
+const { sendError, validateID } = require('../../utils');
 
 const createHelpline = (req, res) => {
     const helpline = new admissionHelpline(req.body);
@@ -30,48 +30,44 @@ const getHelplines = (req, res) => {
 }
 
 const getHelplineById = (req, res) => {
-        const id = req.params.id;
-        validateID(id).then(() => 
-        {
-            admissionHelpline.findById(id)
+    const id = req.params.id;
+    validateID(id).then(() => {
+        admissionHelpline.findById(id)
             .then((helpline) => res.json(helpline))
             .catch((err) => sendError(res, err));
-        })
+    })
         .catch((err) => sendError(res, err));
 }
 
 const editHelpline = (req, res) => {
     const id = req.params.id;
-    validateID(id).then(() =>
-    {
+    validateID(id).then(() => {
         req.body.updatedAt = Date.now();
         admissionHelpline.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
             .then((helpline) => res.json(helpline))
             .catch((err) => sendError(res, err));
     })
-    .catch((err) => sendError(res, err));
+        .catch((err) => sendError(res, err));
 }
 
 const hideHelpline = (req, res) => {
     const id = req.params.id;
-    validateID(id).then(() =>
-    {
+    validateID(id).then(() => {
         admissionHelpline.findByIdAndUpdate(id, { visible: false }, { new: true })
             .then((helpline) => res.json(helpline))
             .catch((err) => sendError(res, err));
     })
-    .catch((err) => sendError(res, err));
+        .catch((err) => sendError(res, err));
 }
 
 const deleteHelpline = (req, res) => {
     const id = req.params.id;
-    validateID(id).then(() =>
-    {
+    validateID(id).then(() => {
         admissionHelpline.findByIdAndDelete(id)
             .then((deletedHelpline) => res.json(deletedHelpline))
             .catch((err) => sendError(res, err));
     })
-    .catch((err) => sendError(res, err));
+        .catch((err) => sendError(res, err));
 }
 
 module.exports = {

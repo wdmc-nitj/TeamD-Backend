@@ -1,5 +1,5 @@
 const admissionUpdate = require('../../models/admissions').update;
-const { sendError, validateID } = require('../../myFuncs');
+const { sendError, validateID } = require('../../utils');
 
 const createUpdate = (req, res) => {
     const update = new admissionUpdate(req.body);
