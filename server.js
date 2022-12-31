@@ -6,6 +6,7 @@ const admissionsRoutes = require('./routes/admissionsRoutes');
 const MoURoutes = require('./routes/MoURoutes');
 const researchRoutes = require('./routes/researchRoutes');
 const recruitmentsRoutes = require('./routes/recruitmentsRoutes');
+const { sendError } = require('./utils');
 
 // Environment variables for database username and password
 const dbUser = process.env.atlasUser;
@@ -38,4 +39,5 @@ app.use('/MoU', MoURoutes);
 app.use('/research', researchRoutes);
 app.use('/recruitments', recruitmentsRoutes);
 
-app.use((req, res) => res.status(404).send('404 Not Found'));
+// 404 page
+app.use((req, res) => res.status(404).send(`Cannot ${req.method} ${req.url} <br>Refer to docs.`));
