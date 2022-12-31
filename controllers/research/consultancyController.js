@@ -37,13 +37,37 @@ const getAllConsultancies = (req, res) => {
         .catch((err) => sendError(res, err));
 };
 
-// get all visible consultancies sorted by startYear
-const getVisibleConsultanciesSortedByStartYear = (req, res) => {
+// GET all visible consultancies by start year
+const getVisibleConsultanciesInStartYear = (req, res) => {
+    const startYear = parseInt(req.params.startYear);
 
+    if (!startYear) {
+        return sendError(res, `Invalid value for startYear: ${req.params.startYear}`);
+    }
+    
+    Consultancy
+        .find({ visible: true, startYear: startYear })
+        .sort({ startYear: -1 })
+        .then((consultancies) => res.json(consultancies))
+        .catch((err) => sendError(res, err));
+};
+
+// GET all visible consultancies grouped by start year
+const getVisibleConsultanciesGroupedByStartYear = (req, res) => {
+    
     Consultancy
         .find({ visible: true })
         .sort({ startYear: -1 })
-        .then((consultancies) => res.json(consultancies))
+        .then((consultancies) => {
+            let groupedConsultancies = {};
+            consultancies.forEach((consultancy) => {
+                if (!groupedConsultancies[consultancy.startYear]) {
+                    groupedConsultancies[consultancy.startYear] = [];
+                }
+                groupedConsultancies[consultancy.startYear].push(consultancy);
+            });
+            res.json(groupedConsultancies);
+        })
         .catch((err) => sendError(res, err));
 };
 
@@ -159,7 +183,8 @@ const deleteConsultancyByID = (req, res) => {
 // Export all the functions
 module.exports = {
     getAllConsultancies,
-    getVisibleConsultanciesSortedByStartYear,
+    getVisibleConsultanciesInStartYear,
+    getVisibleConsultanciesGroupedByStartYear,
     createConsultancy,
     getConsultancyByID,
     updateConsultancyByID,

@@ -5,8 +5,11 @@ const consultancyController = require('../../controllers/research/consultancyCon
 ConsultancyRouter.route('/all/:visible')
     .get(consultancyController.getAllConsultancies);
 
-ConsultancyRouter.route('/sortByStartYear')
-    .get(consultancyController.getVisibleConsultanciesSortedByStartYear);
+ConsultancyRouter.route('/year/:startYear')
+    .get(consultancyController.getVisibleConsultanciesInStartYear);
+
+ConsultancyRouter.route('/groupByYear')
+    .get(consultancyController.getVisibleConsultanciesGroupedByStartYear);
 
 ConsultancyRouter.route('/create')
     .post(consultancyController.createConsultancy);

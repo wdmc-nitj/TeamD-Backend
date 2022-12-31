@@ -5,7 +5,7 @@ const createSponsoredProject = (req, res) => {
     const newSponsoredProject = new SponsoredProject(req.body);
 
     newSponsoredProject.save()
-        .then(sponsoredProject => res.json(sponsoredProject))
+        .then(sponsoredProject => res.status(201).json(sponsoredProject))
         .catch(err => sendError(res, err));
 };
 
@@ -26,13 +26,37 @@ const getAllSponsoredProjects = (req, res) => {
         .catch(err => sendError(res, err));
 };
 
-const getVisibleSponsoredProjectsSortedByYear = (req, res) => {
+const getVisibleSponsoredProjectsInYear = (req, res) => {
+    const year = req.params.startYear;
+
+    if (!year) {
+        return sendError(res, `Invalid year: ${year}`);
+    }
+
     SponsoredProject
-        .find({ visible: true })
-        .sort({ yearOfSanctionStart: -1 })
+        .find({ yearOfSanctionStart: year, visible: true })
         .then(sponsoredProjects => res.json(sponsoredProjects))
         .catch(err => sendError(res, err));
 };
+
+const getVisibleSponsoredProjectsGroupedByYear = (req, res) => {
+    SponsoredProject
+        .find({ visible: true })
+        .then(sponsoredProjects => {
+            const groupedSponsoredProjects = sponsoredProjects.reduce((acc, curr) => {
+                const year = curr.yearOfSanctionStart;
+                if (!acc[year]) {
+                    acc[year] = [];
+                }
+                acc[year].push(curr);
+                return acc;
+            }, {});
+
+            res.json(groupedSponsoredProjects);
+        })
+        .catch(err => sendError(res, err));
+};
+
 
 const getSponsoredProjectByID = (req, res) => {
     const id = req.params.id;
@@ -114,7 +138,8 @@ const deleteSponsoredProjectByID = (req, res) => {
 module.exports = {
     createSponsoredProject,
     getAllSponsoredProjects,
-    getVisibleSponsoredProjectsSortedByYear,
+    getVisibleSponsoredProjectsInYear,
+    getVisibleSponsoredProjectsGroupedByYear,
     getSponsoredProjectByID,
     updateSponsoredProjectByID,
     hideSponsoredProjectByID,
