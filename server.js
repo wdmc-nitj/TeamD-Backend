@@ -6,7 +6,6 @@ const admissionsRoutes = require('./routes/admissionsRoutes');
 const MoURoutes = require('./routes/MoURoutes');
 const researchRoutes = require('./routes/researchRoutes');
 const recruitmentsRoutes = require('./routes/recruitmentsRoutes');
-const { sendError } = require('./utils');
 
 // Environment variables for database username and password
 const dbUser = process.env.atlasUser;
