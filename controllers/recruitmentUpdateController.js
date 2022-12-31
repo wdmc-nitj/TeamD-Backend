@@ -28,8 +28,15 @@ const getVisibleRecruitmentUpdatesByCategory = (req, res) => {
         return sendError(res, 'Category is empty');
     }
 
+    // filter by category if it is not 'all'
+    let filter = { visible: true };
+    
+    if (category !== 'all') {
+        filter.category = category;
+    }
+
     RecruitmentUpdate
-        .find({ visible: true, category: category })
+        .find(filter)
         .sort({ updatedAt: -1 })
         .then((recruitmentUpdates) => res.json(recruitmentUpdates))
         .catch((err) => sendError(res, err));
