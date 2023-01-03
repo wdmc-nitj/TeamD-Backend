@@ -6,7 +6,6 @@ const admissionsRoutes = require('./routes/admissionsRoutes');
 const MoURoutes = require('./routes/MoURoutes');
 const researchRoutes = require('./routes/researchRoutes');
 const recruitmentsRoutes = require('./routes/recruitmentsRoutes');
-const { sendError } = require('./utils');
 
 // Environment variables for database username and password
 const dbUser = process.env.atlasUser;
@@ -31,6 +30,14 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // routes
+
+// add access control headers
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next(); 
+});
 
 app.get('/health-check', (req, res) => res.send('OK'));
 
