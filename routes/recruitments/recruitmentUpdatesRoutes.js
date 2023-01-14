@@ -5,7 +5,7 @@ const recruitmentUpdateController = require('../../controllers/recruitmentUpdate
 recruitmentUpdateRouter.route('/create')
     .post(recruitmentUpdateController.createRecruitmentUpdate);
 
-recruitmentUpdateRouter.route('/all/:visible')
+recruitmentUpdateRouter.route('/get/:visible')
     .get(recruitmentUpdateController.getAllRecruitmentUpdates);
 
 recruitmentUpdateRouter.route('/category/:category')

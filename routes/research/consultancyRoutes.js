@@ -2,7 +2,7 @@ const express = require('express');
 const ConsultancyRouter = express.Router();
 const consultancyController = require('../../controllers/research/consultancyController');
 
-ConsultancyRouter.route('/all/:visible')
+ConsultancyRouter.route('/get/:visible')
     .get(consultancyController.getAllConsultancies);
 
 ConsultancyRouter.route('/year/:startYear')

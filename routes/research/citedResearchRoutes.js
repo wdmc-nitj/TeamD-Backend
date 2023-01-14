@@ -9,7 +9,7 @@ citedResearchRouter.route('/create')
 citedResearchRouter.route('/top10')
     .get(citedResearchController.getTop10CitedResearches);
 
-citedResearchRouter.route('/all/:visible')
+citedResearchRouter.route('/get/:visible')
     .get(citedResearchController.getAllCitedResearches);
 
 citedResearchRouter.route('/id/:id')

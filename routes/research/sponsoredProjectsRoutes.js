@@ -5,7 +5,7 @@ const sponsoredProjectsController = require('../../controllers/research/sponsore
 sponsoredProjectsRouter.route('/create')
     .post(sponsoredProjectsController.createSponsoredProject);
 
-sponsoredProjectsRouter.route('/all/:visible')
+sponsoredProjectsRouter.route('/get/:visible')
     .get(sponsoredProjectsController.getAllSponsoredProjects);
 
 sponsoredProjectsRouter.route('/year/:startYear')

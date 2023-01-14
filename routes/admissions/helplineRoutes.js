@@ -12,6 +12,6 @@ helplineRouter.route('/id/:id')
     .delete(helplineController.hideHelpline)
     .put(helplineController.deleteHelpline);
 
-helplineRouter.route('/:degree/:visible').get(helplineController.getHelplines); // visible can be 'visible', 'hidden' or 'all'
+helplineRouter.route('/get/:degree/:visible').get(helplineController.getHelplines); // visible can be 'visible', 'hidden' or 'all'
 
 module.exports = helplineRouter;
