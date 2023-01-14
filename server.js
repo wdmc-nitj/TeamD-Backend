@@ -29,8 +29,6 @@ mongoose.connect(dbURI)
 app.use(express.json());
 app.use(morgan('dev'));
 
-// routes
-
 // add access control headers
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -39,6 +37,16 @@ app.use((req, res, next) => {
     next(); 
 });
 
+// check if API_Key is valid for non GET requests
+app.use((req, res, next) => {
+    if (req.method !== 'GET' && req.headers['api_key'] !== process.env.WDMC_API_Key) {
+        res.status(401).send('Invalid API Key');
+    } else {
+        next();
+    }
+});
+
+// routes
 app.get('/health-check', (req, res) => res.send('OK'));
 
 app.use('/admissions', admissionsRoutes);
@@ -47,4 +55,4 @@ app.use('/research', researchRoutes);
 app.use('/recruitments', recruitmentsRoutes);
 
 // 404 page
-app.use((req, res) => res.status(404).send(`Cannot ${req.method} ${req.url} <br>Refer to docs.`));
+app.use((req, res) => res.status(404).send(`Cannot ${req.method} ${req.url}`));
