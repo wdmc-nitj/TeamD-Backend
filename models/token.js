@@ -1,18 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const API_KeySchema = new Schema({
+const TokenSchema = new Schema({
     name: {
         type: String,
         required: true,
         unique: true
     },
-    key: {
+    value: {
         type: String,
         required: true
     }
 });
 
-const API_Key = mongoose.model('API_Key', API_KeySchema);
+const Token = mongoose.model('Token', TokenSchema);
 
-module.exports = API_Key;
+module.exports = Token;

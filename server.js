@@ -7,7 +7,7 @@ const MoURoutes = require('./routes/MoURoutes');
 const researchRoutes = require('./routes/researchRoutes');
 const recruitmentsRoutes = require('./routes/recruitmentsRoutes');
 
-const API_Key_Model = require('./models/API_Key');
+const Token = require('./models/token');
 
 // Environment variables for database username and password
 const dbUser = process.env.atlasUser;
@@ -39,23 +39,25 @@ app.use((req, res, next) => {
     next(); 
 });
 
-// API Key authentication for non GET requests
+// Token authentication for non GET requests
 app.use((req, res, next) => {
 
     if (req.method === 'GET') {
         return next();
     }
 
-    // fetch required API_Key from database    
-    API_Key_Model.findOne({ name: 'WDMC_API_Key' })
-        .then((requiredKey) => {
-            
-            // check if API_Key in request is valid
-            if (req.headers['api_key'] !== requiredKey.key) {
-                res.status(401).json('Invalid API Key');
-            } else {
-                next();
+    // fetch required token from database    
+    Token.findOne({ name: 'BearerToken' })
+        .then((requiredToken) => {
+            // check if token is valid if it exists
+            if (!req.headers.authorization) {
+                return res.status(401).json('Token not found');
             }
+            if (req.headers.authorization.split(' ')[1] !== requiredToken.value) {
+                return res.status(401).json('Invalid token');
+            }
+            next();
+            
         })
         .catch((err) => {
             console.log(err);
