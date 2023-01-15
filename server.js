@@ -2,11 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 
-const admissionsRoutes = require('./routes/admissionsRoutes');
-const MoURoutes = require('./routes/MoURoutes');
-const researchRoutes = require('./routes/researchRoutes');
-const recruitmentsRoutes = require('./routes/recruitmentsRoutes');
-
+const app = require('./app');
 const Token = require('./models/token');
 
 // Environment variables for database username and password
@@ -16,13 +12,11 @@ const clusterName = process.env.atlasClusterName;
 const dbName = process.env.atlasDBName;
 const dbURI = `mongodb+srv://${dbUser}:${dbPass}@${clusterName}/${dbName}?retryWrites=true&w=majority`;
 
-// express app
-const app = express();
-
 // connect to MongoDB
 mongoose.connect(dbURI)
     .then((result) => {
         app.listen(3000);
+        console.log('Listening on port 3000...');
     })
     .catch((err) => {
         console.log(err);
@@ -65,13 +59,8 @@ app.use((req, res, next) => {
 
 });
 
-// routes
+// health check
 app.get('/health-check', (req, res) => res.send('OK'));
 
-app.use('/admissions', admissionsRoutes);
-app.use('/MoU', MoURoutes);
-app.use('/research', researchRoutes);
-app.use('/recruitments', recruitmentsRoutes);
-
-// 404 page
+// 404 error
 app.use((req, res) => res.status(404).json(`Cannot ${req.method} ${req.url}`));
