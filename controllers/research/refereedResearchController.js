@@ -3,16 +3,16 @@ const RefereedResearch = require('../../models/research/researchPublications').R
 
 // GET all refereed researches
 const getAllRefereedResearches = (req, res, next) => {
-    // filter by req.params.visible if it is not 'all'
+    // filter by req.query.visible if it is not 'all'
     let filter = {};
 
-    if (req.params.visible === 'visible') {
+    if (req.query.visible === 'visible') {
         filter.visible = true;
     }
-    else if (req.params.visible === 'hidden') {
+    else if (req.query.visible === 'hidden') {
         filter.visible = false;
-    } else if (req.params.visible !== 'all') {
-        return sendError(res, `Invalid value for visible: ${req.params.visible}`);
+    } else if (req.query.visible !== 'all') {
+        return sendError(res, `Invalid value for visible: ${req.query.visible}`);
     }
 
     RefereedResearch
@@ -32,7 +32,7 @@ const createRefereedResearch = (req, res) => {
 
 // Edit a refereed research
 const editRefereedResearch = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     validateID(id)
         .then(() => {
@@ -46,7 +46,7 @@ const editRefereedResearch = (req, res) => {
 
 // Get a refereed research by id
 const getRefereedResearchById = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id)
         .then(() => RefereedResearch
             .findById(id)
@@ -57,7 +57,7 @@ const getRefereedResearchById = (req, res) => {
 
 // Hide a refereed research
 const hideRefereedResearch = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     validateID(id)
         .then(() => RefereedResearch
@@ -69,7 +69,7 @@ const hideRefereedResearch = (req, res) => {
 
 // Delete a refereed research
 const deleteRefereedResearch = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     validateID(id)
         .then(() => RefereedResearch.findByIdAndDelete(id))

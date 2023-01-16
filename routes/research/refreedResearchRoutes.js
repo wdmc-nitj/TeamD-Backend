@@ -12,7 +12,7 @@ RefereedResearchRouter.route('/id/:id')
     .delete(refereedResearchController.hideRefereedResearch)
     .put(refereedResearchController.deleteRefereedResearch);
 
-RefereedResearchRouter.route('/get/:visible')
+RefereedResearchRouter.route('/get')
     .get(refereedResearchController.getAllRefereedResearches);
 
 module.exports = RefereedResearchRouter;

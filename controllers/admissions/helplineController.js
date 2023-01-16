@@ -11,15 +11,15 @@ const createHelpline = (req, res) => {
 
 const getHelplines = (req, res) => {
     let filter = {};
-    // filter by req.params.degree if it is not 'all'
-    if (req.params.degree !== 'all') {
-        filter.degree = req.params.degree;
+    // filter by req.query.degree if it is not 'all'
+    if (req.query.degree !== 'all') {
+        filter.degree = req.query.degree;
     }
 
-    // filter by req.params.visible if it is not 'all'
-    if (req.params.visible === 'visible') {
+    // filter by req.query.visible if it is not 'all'
+    if (req.query.visible === 'visible') {
         filter.visible = true;
-    } else if (req.params.visible === 'hidden') {
+    } else if (req.query.visible === 'hidden') {
         filter.visible = false;
     }
 
@@ -30,7 +30,7 @@ const getHelplines = (req, res) => {
 }
 
 const getHelplineById = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id).then(() => {
         admissionHelpline.findById(id)
             .then((helpline) => res.json(helpline))
@@ -40,7 +40,7 @@ const getHelplineById = (req, res) => {
 }
 
 const editHelpline = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id).then(() => {
         req.body.updatedAt = Date.now();
         admissionHelpline.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
@@ -51,7 +51,7 @@ const editHelpline = (req, res) => {
 }
 
 const hideHelpline = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id).then(() => {
         admissionHelpline.findByIdAndUpdate(id, { visible: false }, { new: true })
             .then((helpline) => res.json(helpline))
@@ -61,7 +61,7 @@ const hideHelpline = (req, res) => {
 }
 
 const deleteHelpline = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id).then(() => {
         admissionHelpline.findByIdAndDelete(id)
             .then((deletedHelpline) => res.json(deletedHelpline))

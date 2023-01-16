@@ -19,15 +19,15 @@ const digitsToWords = (num) => {
 
 // GET all consultancies
 const getAllConsultancies = (req, res) => {
-    // filter by req.params.visible if it is not 'all'
+    // filter by req.query.visible if it is not 'all'
     let filter = {};
 
-    if (req.params.visible === 'visible') {
+    if (req.query.visible === 'visible') {
         filter.visible = true;
-    } else if (req.params.visible === 'hidden') {
+    } else if (req.query.visible === 'hidden') {
         filter.visible = false;
-    } else if (req.params.visible !== 'all') {
-        return sendError(res, `Invalid value for visible: ${req.params.visible}`);
+    } else if (req.query.visible !== 'all') {
+        return sendError(res, `Invalid value for visible: ${req.query.visible}`);
     }
 
     Consultancy
@@ -39,12 +39,12 @@ const getAllConsultancies = (req, res) => {
 
 // GET all visible consultancies by start year
 const getVisibleConsultanciesInStartYear = (req, res) => {
-    const startYear = parseInt(req.params.startYear);
+    const startYear = parseInt(req.query.startYear);
 
     if (!startYear) {
-        return sendError(res, `Invalid value for startYear: ${req.params.startYear}`);
+        return sendError(res, `Invalid value for startYear: ${req.query.startYear}`);
     }
-    
+
     Consultancy
         .find({ visible: true, startYear: startYear })
         .sort({ startYear: -1 })
@@ -54,7 +54,7 @@ const getVisibleConsultanciesInStartYear = (req, res) => {
 
 // GET all visible consultancies grouped by start year
 const getVisibleConsultanciesGroupedByStartYear = (req, res) => {
-    
+
     Consultancy
         .find({ visible: true })
         .sort({ startYear: -1 })
@@ -74,7 +74,7 @@ const getVisibleConsultanciesGroupedByStartYear = (req, res) => {
 // Create a new consultancy
 const createConsultancy = (req, res) => {
     const newConsultancy = new Consultancy(req.body);
-    if(!newConsultancy.amountDigits) {
+    if (!newConsultancy.amountDigits) {
         return sendError(res, 'Amount is empty');
     }
     newConsultancy.amountWords = digitsToWords(newConsultancy.amountDigits);
@@ -86,7 +86,7 @@ const createConsultancy = (req, res) => {
 
 // GET a consultancy by ID
 const getConsultancyByID = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);
@@ -106,7 +106,7 @@ const getConsultancyByID = (req, res) => {
 
 // Update a consultancy by ID
 const updateConsultancyByID = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);
@@ -120,7 +120,7 @@ const updateConsultancyByID = (req, res) => {
             }
 
             const updatedConsultancy = req.body;
-            if(!updatedConsultancy.amountDigits) {
+            if (!updatedConsultancy.amountDigits) {
                 return sendError(res, 'Amount is empty');
             }
             updatedConsultancy.amountWords = digitsToWords(updatedConsultancy.amountDigits);
@@ -136,7 +136,7 @@ const updateConsultancyByID = (req, res) => {
 };
 
 const hideConsultancyByID = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);
@@ -153,11 +153,11 @@ const hideConsultancyByID = (req, res) => {
         })
         .catch((err) => sendError(res, err));
 };
-        
+
 
 // Delete a consultancy by ID
 const deleteConsultancyByID = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);

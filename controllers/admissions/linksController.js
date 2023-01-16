@@ -12,9 +12,9 @@ const createLink = (req, res) => {
 const getLinks = (req, res) => {
     let filter = {};
 
-    if (req.params.visible === 'visible') {
+    if (req.query.visible === 'visible') {
         filter.visible = true;
-    } else if (req.params.visible === 'hidden') {
+    } else if (req.query.visible === 'hidden') {
         filter.visible = false;
     }
 
@@ -26,7 +26,7 @@ const getLinks = (req, res) => {
 
 const getLinkById = (req, res) => {
 
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id).then(() => {
         admissionLink.findById(id)
             .then((link) => res.json(link))
@@ -37,7 +37,7 @@ const getLinkById = (req, res) => {
 
 const editLink = (req, res) => {
 
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id).then(() => {
         req.body.updatedAt = Date.now();
         admissionLink.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
@@ -49,7 +49,7 @@ const editLink = (req, res) => {
 
 const hideLink = (req, res) => {
 
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id).then(() => {
         admissionLink.findByIdAndUpdate(id, { visible: false }, { new: true, runValidators: true })
             .then((updatedLink) => res.json(updatedLink))
@@ -60,7 +60,7 @@ const hideLink = (req, res) => {
 
 const deleteLink = (req, res) => {
 
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id).then(() => {
         admissionLink.findByIdAndDelete(id)
             .then((deletedLink) => res.json(deletedLink))

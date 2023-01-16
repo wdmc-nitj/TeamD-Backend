@@ -1,16 +1,16 @@
-const {sendError, validateID } = require('../../utils');
+const { sendError, validateID } = require('../../utils');
 const UpcomingEvent = require('../../models/research/upcomingEvents');
 
 const getAllUpcomingEvents = (req, res) => {
-    // filter by req.params.visible if it is not all
+    // filter by req.query.visible if it is not all
     let filter = {};
 
-    if (req.params.visible === 'visible') {
+    if (req.query.visible === 'visible') {
         filter.visible = true;
-    } else if (req.params.visible === 'hidden') {
+    } else if (req.query.visible === 'hidden') {
         filter.visible = false;
-    } else if (req.params.visible !== 'all') {
-        return sendError(res, `Invalid value for visible: ${req.params.visible}`);
+    } else if (req.query.visible !== 'all') {
+        return sendError(res, `Invalid value for visible: ${req.query.visible}`);
     }
 
     UpcomingEvent
@@ -29,7 +29,7 @@ const createUpcomingEvent = (req, res) => {
 };
 
 const getUpcomingEventByID = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);
@@ -48,7 +48,7 @@ const getUpcomingEventByID = (req, res) => {
 };
 
 const updateUpcomingEventByID = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);
@@ -68,7 +68,7 @@ const updateUpcomingEventByID = (req, res) => {
 };
 
 const hideUpcomingEventByID = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);
@@ -87,7 +87,7 @@ const hideUpcomingEventByID = (req, res) => {
 };
 
 const deleteUpcomingEventByID = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);

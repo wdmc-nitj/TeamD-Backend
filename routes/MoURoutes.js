@@ -13,7 +13,7 @@ MoURouter.route('/id/:id')
     .delete(MoUsController.hideMoU)
     .put(MoUsController.deleteMoU);
 
-MoURouter.route('/get/:category/:visible')
+MoURouter.route('/get')
     .get(MoUsController.getMoUs); // visible can be 'visible', 'hidden' or 'all
 
 module.exports = MoURouter;

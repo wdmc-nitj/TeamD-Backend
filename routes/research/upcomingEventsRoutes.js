@@ -2,7 +2,7 @@ const express = require('express');
 const upcomingEventController = require('../../controllers/research/upcomingEventController');
 const upcomingEventRouter = express.Router();
 
-upcomingEventRouter.route('/get/:visible')
+upcomingEventRouter.route('/get')
     .get( upcomingEventController.getAllUpcomingEvents);
 
 upcomingEventRouter.route('/create')

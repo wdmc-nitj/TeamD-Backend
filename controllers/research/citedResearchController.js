@@ -3,16 +3,16 @@ const { sendError, validateID } = require('../../utils');
 
 // GET all cited researches
 const getAllCitedResearches = (req, res, next) => {
-    // filter by req.params.visible if it is not 'all'
+    // filter by req.query.visible if it is not 'all'
     let filter = {};
 
-    if (req.params.visible === 'visible') {
+    if (req.query.visible === 'visible') {
         filter.visible = true;
     }
-    else if (req.params.visible === 'hidden') {
+    else if (req.query.visible === 'hidden') {
         filter.visible = false;
-    } else if (req.params.visible !== 'all') {
-        return sendError(res, `Invalid value for visible: ${req.params.visible}`);
+    } else if (req.query.visible !== 'all') {
+        return sendError(res, `Invalid value for visible: ${req.query.visible}`);
     }
 
     CitedResearch
@@ -33,7 +33,7 @@ const getTop10CitedResearches = (req, res) => {
 
 // GET cited research by id
 const getCitedResearchById = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id)
         .then(() => CitedResearch.findById(id))
         .then((citedResearch) => res.json(citedResearch))
@@ -51,7 +51,7 @@ const createCitedResearch = (req, res) => {
 
 // PATCH edit cited research
 const editCitedResearch = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     validateID(id)
         .then(() => {
@@ -65,7 +65,7 @@ const editCitedResearch = (req, res) => {
 
 // DELETE hide cited research
 const hideCitedResearch = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     validateID(id)
         .then(() => CitedResearch
@@ -76,7 +76,7 @@ const hideCitedResearch = (req, res) => {
 
 // PUT delete cited research
 const deleteCitedResearch = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     validateID(id)
         .then(() => CitedResearch.findByIdAndDelete(id))

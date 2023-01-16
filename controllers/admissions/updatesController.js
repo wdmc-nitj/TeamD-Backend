@@ -12,13 +12,13 @@ const createUpdate = (req, res) => {
 const getUpdates = (req, res) => {
     let filter = {};
 
-    if (req.params.degree !== 'all') {
-        filter.degree = req.params.degree;
+    if (req.query.degree !== 'all') {
+        filter.degree = req.query.degree;
     }
 
-    if (req.params.visible === 'visible') {
+    if (req.query.visible === 'visible') {
         filter.visible = true;
-    } else if (req.params.visible === 'hidden') {
+    } else if (req.query.visible === 'hidden') {
         filter.visible = false;
     }
 
@@ -29,7 +29,7 @@ const getUpdates = (req, res) => {
 };
 
 const getUpdateById = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id).then(() => {
         admissionUpdate.findById(id)
             .then((update) => res.json(update))
@@ -39,7 +39,7 @@ const getUpdateById = (req, res) => {
 };
 
 const editUpdate = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id).then(() => {
         req.body.updatedAt = Date.now();
         admissionUpdate.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
@@ -50,7 +50,7 @@ const editUpdate = (req, res) => {
 };
 
 const hideUpdate = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id).then(() => {
         admissionUpdate.findByIdAndUpdate(id, { visible: false }, { new: true })
             .then((result) => res.json(result))
@@ -60,7 +60,7 @@ const hideUpdate = (req, res) => {
 };
 
 const deleteUpdate = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id).then(() => {
         admissionUpdate.findByIdAndDelete(id)
             .then((deletedUpdate) => res.json(deletedUpdate))

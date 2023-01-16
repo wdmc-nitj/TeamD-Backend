@@ -13,17 +13,17 @@ const createMoU = (req, res) => {
 const getMoUs = (req, res) => {
     let filter = {};
 
-    // filter by req.params.category if it is not 'all'
-    if (req.params.category !== 'all') {
-        filter.category = req.params.category;
+    // filter by req.query.category if it is not 'all'
+    if (req.query.category !== 'all') {
+        filter.category = req.query.category;
     }
 
-    if (req.params.visible === 'visible') {
+    if (req.query.visible === 'visible') {
         filter.visible = true;
-    } else if (req.params.visible === 'hidden') {
+    } else if (req.query.visible === 'hidden') {
         filter.visible = false;
-    } else if (req.params.visible !== 'all') {
-        return sendError(res, `Invalid value for visible: ${req.params.visible}`);
+    } else if (req.query.visible !== 'all') {
+        return sendError(res, `Invalid value for visible: ${req.query.visible}`);
     }
 
     MoU.find(filter)
@@ -32,7 +32,7 @@ const getMoUs = (req, res) => {
 };
 
 const getMoUById = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id).then(() => {
         MoU.findById(id)
             .then((MoU) => res.json(MoU))
@@ -43,7 +43,7 @@ const getMoUById = (req, res) => {
 
 const editMoU = (req, res) => {
 
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id).then(() => {
         req.body.updatedAt = Date.now();
         MoU.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
@@ -54,7 +54,7 @@ const editMoU = (req, res) => {
 };
 
 const hideMoU = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id).then(() => {
         MoU.findByIdAndUpdate(id, { visible: false }, { new: true })
             .then((updatedMoU) => res.json(updatedMoU))
@@ -64,7 +64,7 @@ const hideMoU = (req, res) => {
 };
 
 const deleteMoU = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
     validateID(id).then(() => {
         MoU.findByIdAndDelete(id)
             .then((deletedMoU) => res.json(deletedMoU))

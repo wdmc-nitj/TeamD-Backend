@@ -12,6 +12,6 @@ updatesRouter.route('/id/:id')
     .delete(updatesController.hideUpdate)
     .put(updatesController.deleteUpdate);
 
-updatesRouter.route('/get/:degree/:visible').get(updatesController.getUpdates); // visible can be 'visible', 'hidden' or 'all'
+updatesRouter.route('/get').get(updatesController.getUpdates); // visible can be 'visible', 'hidden' or 'all'
 
 module.exports = updatesRouter;

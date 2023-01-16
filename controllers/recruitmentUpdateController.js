@@ -1,16 +1,16 @@
-const {sendError, validateID } = require('../utils');
+const { sendError, validateID } = require('../utils');
 const RecruitmentUpdate = require('../models/recruitmentUpdates');
 
 // GET all recruitment updates
 const getAllRecruitmentUpdates = (req, res) => {
     let filter = {};
 
-    if (req.params.visible === 'visible') {
+    if (req.query.visible === 'visible') {
         filter.visible = true;
-    } else if (req.params.visible === 'hidden') {
+    } else if (req.query.visible === 'hidden') {
         filter.visible = false;
-    } else if (req.params.visible !== 'all') {
-        return sendError(res, `Invalid value for visible: ${req.params.visible}`);
+    } else if (req.query.visible !== 'all') {
+        return sendError(res, `Invalid value for visible: ${req.query.visible}`);
     }
 
     RecruitmentUpdate
@@ -22,7 +22,7 @@ const getAllRecruitmentUpdates = (req, res) => {
 
 // get visible recruitment updates by category
 const getVisibleRecruitmentUpdatesByCategory = (req, res) => {
-    const category = req.params.category;
+    const category = req.query.category;
 
     if (!category) {
         return sendError(res, 'Category is empty');
@@ -30,7 +30,7 @@ const getVisibleRecruitmentUpdatesByCategory = (req, res) => {
 
     // filter by category if it is not 'all'
     let filter = { visible: true };
-    
+
     if (category !== 'all') {
         filter.category = category;
     }
@@ -53,7 +53,7 @@ const createRecruitmentUpdate = (req, res) => {
 
 // GET a recruitment update by ID
 const getRecruitmentUpdateByID = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);
@@ -73,7 +73,7 @@ const getRecruitmentUpdateByID = (req, res) => {
 
 // Edit a recruitment update by ID
 const editRecruitmentUpdateByID = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);
@@ -94,7 +94,7 @@ const editRecruitmentUpdateByID = (req, res) => {
 
 // Hide a recruitment update by ID
 const hideRecruitmentUpdateByID = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);
@@ -114,7 +114,7 @@ const hideRecruitmentUpdateByID = (req, res) => {
 
 // Delete a recruitment update by ID
 const deleteRecruitmentUpdateByID = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);

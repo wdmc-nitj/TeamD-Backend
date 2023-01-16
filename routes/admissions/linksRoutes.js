@@ -12,7 +12,7 @@ linksRouter.route('/id/:id')
     .delete(linksController.hideLink)
     .put(linksController.deleteLink);
 
-linksRouter.route('/get/:visible').get(linksController.getLinks); // visible can be 'visible', 'hidden' or 'all'
+linksRouter.route('/get').get(linksController.getLinks); // visible can be 'visible', 'hidden' or 'all'
 
 
 module.exports = linksRouter;

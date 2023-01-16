@@ -8,7 +8,7 @@ recruitmentUpdateRouter.route('/create')
 recruitmentUpdateRouter.route('/get/:visible')
     .get(recruitmentUpdateController.getAllRecruitmentUpdates);
 
-recruitmentUpdateRouter.route('/category/:category')
+recruitmentUpdateRouter.route('/category')
     .get(recruitmentUpdateController.getVisibleRecruitmentUpdatesByCategory);
 
 recruitmentUpdateRouter.route('/id/:id')

@@ -1,4 +1,4 @@
-const {sendError, validateID } = require('../../utils');
+const { sendError, validateID } = require('../../utils');
 const SponsoredProject = require('../../models/research/sponsoredProjects');
 
 const createSponsoredProject = (req, res) => {
@@ -11,13 +11,13 @@ const createSponsoredProject = (req, res) => {
 
 const getAllSponsoredProjects = (req, res) => {
     let filter = {};
- 
-    if (req.params.visible === 'visible') {
+
+    if (req.query.visible === 'visible') {
         filter.visible = true;
-    } else if (req.params.visible === 'hidden') {
+    } else if (req.query.visible === 'hidden') {
         filter.visible = false;
-    } else if (req.params.visible !== 'all') {
-        return sendError(res, `Invalid value for visible: ${req.params.visible}`);
+    } else if (req.query.visible !== 'all') {
+        return sendError(res, `Invalid value for visible: ${req.query.visible}`);
     }
 
     SponsoredProject
@@ -27,7 +27,7 @@ const getAllSponsoredProjects = (req, res) => {
 };
 
 const getVisibleSponsoredProjectsInYear = (req, res) => {
-    const year = req.params.startYear;
+    const year = req.query.startYear;
 
     if (!year) {
         return sendError(res, `Invalid year: ${year}`);
@@ -59,7 +59,7 @@ const getVisibleSponsoredProjectsGroupedByYear = (req, res) => {
 
 
 const getSponsoredProjectByID = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);
@@ -78,12 +78,12 @@ const getSponsoredProjectByID = (req, res) => {
 };
 
 const updateSponsoredProjectByID = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);
     }
-    
+
     req.body.updatedAt = Date.now();
     SponsoredProject
         .findByIdAndUpdate(id, req.body, { new: true })
@@ -98,7 +98,7 @@ const updateSponsoredProjectByID = (req, res) => {
 };
 
 const hideSponsoredProjectByID = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);
@@ -117,7 +117,7 @@ const hideSponsoredProjectByID = (req, res) => {
 };
 
 const deleteSponsoredProjectByID = (req, res) => {
-    const id = req.params.id;
+    const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);
