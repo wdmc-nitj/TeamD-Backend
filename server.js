@@ -2,7 +2,12 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 
-const app = require('./app');
+const admissionsRoutes = require('./routes/admissionsRoutes');
+const MoURoutes = require('./routes/MoURoutes');
+const researchRoutes = require('./routes/researchRoutes');
+const recruitmentsRoutes = require('./routes/recruitmentsRoutes');
+
+const app = express();
 const Token = require('./models/token');
 
 // Environment variables for database username and password
@@ -62,5 +67,13 @@ app.use((req, res, next) => {
 // health check
 app.get('/health-check', (req, res) => res.send('OK'));
 
+// routes
+app.use('/admissions', admissionsRoutes);
+app.use('/MoU', MoURoutes);
+app.use('/research', researchRoutes);
+app.use('/recruitments', recruitmentsRoutes);
+
+
 // 404 error
 app.use((req, res) => res.status(404).json(`Cannot ${req.method} ${req.url}`));
+
