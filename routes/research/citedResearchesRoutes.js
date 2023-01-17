@@ -12,7 +12,7 @@ citedResearchRouter.route('/top10')
 citedResearchRouter.route('/get')
     .get(citedResearchController.getAllCitedResearches);
 
-citedResearchRouter.route('/id/:id')
+citedResearchRouter.route('/research')
     .get(citedResearchController.getCitedResearchById)
     .patch(citedResearchController.editCitedResearch)
     .delete(citedResearchController.hideCitedResearch)

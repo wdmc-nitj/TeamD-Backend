@@ -5,13 +5,13 @@ const recruitmentUpdateController = require('../../controllers/recruitmentUpdate
 recruitmentUpdateRouter.route('/create')
     .post(recruitmentUpdateController.createRecruitmentUpdate);
 
-recruitmentUpdateRouter.route('/get/:visible')
+recruitmentUpdateRouter.route('/get')
     .get(recruitmentUpdateController.getAllRecruitmentUpdates);
 
-recruitmentUpdateRouter.route('/category')
+recruitmentUpdateRouter.route('/categorised')
     .get(recruitmentUpdateController.getVisibleRecruitmentUpdatesByCategory);
 
-recruitmentUpdateRouter.route('/id/:id')
+recruitmentUpdateRouter.route('/update')
     .get(recruitmentUpdateController.getRecruitmentUpdateByID)
     .patch(recruitmentUpdateController.editRecruitmentUpdateByID)
     .delete(recruitmentUpdateController.hideRecruitmentUpdateByID)

@@ -8,13 +8,13 @@ sponsoredProjectsRouter.route('/create')
 sponsoredProjectsRouter.route('/get')
     .get(sponsoredProjectsController.getAllSponsoredProjects);
 
-sponsoredProjectsRouter.route('/year/:startYear')
+sponsoredProjectsRouter.route('/year')
     .get(sponsoredProjectsController.getVisibleSponsoredProjectsInYear);
 
 sponsoredProjectsRouter.route('/groupedByYear')
     .get(sponsoredProjectsController.getVisibleSponsoredProjectsGroupedByYear);
 
-sponsoredProjectsRouter.route('/id/:id')
+sponsoredProjectsRouter.route('/project')
     .get(sponsoredProjectsController.getSponsoredProjectByID)
     .patch(sponsoredProjectsController.updateSponsoredProjectByID)
     .delete(sponsoredProjectsController.hideSponsoredProjectByID)

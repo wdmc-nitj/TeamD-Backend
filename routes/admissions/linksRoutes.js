@@ -6,7 +6,7 @@ const linksController = require('../../controllers/admissions/linksController');
 
 linksRouter.route('/create').post(linksController.createLink);
 
-linksRouter.route('/id/:id')
+linksRouter.route('/link')
     .get(linksController.getLinkById)
     .patch(linksController.editLink)
     .delete(linksController.hideLink)

@@ -1,18 +1,18 @@
 const express = require('express');
 const researchRouter = express.Router();
 
-const citedResearchRouter = require('./research/citedResearchRoutes');
-const refereedResearchRouter = require('./research/refreedResearchRoutes');
-const consultancyRouter = require('./research/consultancyRoutes');
+const citedResearchesRouter = require('./research/citedResearchesRoutes');
+const refereedResearchesRouter = require('./research/refreedResearchesRoutes');
+const consultanciesRouter = require('./research/consultanciesRoutes');
 const upcomingEventsRouter = require('./research/upcomingEventsRoutes');
 const sponsoredProjectsRouter = require('./research/sponsoredProjectsRoutes');
 
 
-researchRouter.use('/publications/citedResearch', citedResearchRouter);
+researchRouter.use('/publications/citedResearches', citedResearchesRouter);
 
-researchRouter.use('/publications/refereedResearch', refereedResearchRouter);
+researchRouter.use('/publications/refereedResearches', refereedResearchesRouter);
 
-researchRouter.use('/consultancy', consultancyRouter);
+researchRouter.use('/consultancies', consultanciesRouter);
 
 researchRouter.use('/upcomingEvents', upcomingEventsRouter);
 

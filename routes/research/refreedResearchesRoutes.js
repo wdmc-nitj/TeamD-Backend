@@ -6,7 +6,7 @@ const refereedResearchController = require('../../controllers/research/refereedR
 RefereedResearchRouter.route('/create')
     .post(refereedResearchController.createRefereedResearch);
 
-RefereedResearchRouter.route('/id/:id')
+RefereedResearchRouter.route('/research')
     .get(refereedResearchController.getRefereedResearchById)
     .patch(refereedResearchController.editRefereedResearch)
     .delete(refereedResearchController.hideRefereedResearch)

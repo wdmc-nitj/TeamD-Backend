@@ -6,7 +6,7 @@ const updatesController = require('../../controllers/admissions/updatesControlle
 
 updatesRouter.route('/create').post(updatesController.createUpdate);
 
-updatesRouter.route('/id/:id')
+updatesRouter.route('/update')
     .get(updatesController.getUpdateById)
     .patch(updatesController.editUpdate)
     .delete(updatesController.hideUpdate)

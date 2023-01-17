@@ -8,7 +8,7 @@ upcomingEventRouter.route('/get')
 upcomingEventRouter.route('/create')
     .post( upcomingEventController.createUpcomingEvent);
 
-upcomingEventRouter.route('/id/:id')
+upcomingEventRouter.route('/event')
     .get( upcomingEventController.getUpcomingEventByID)
     .patch( upcomingEventController.updateUpcomingEventByID)
     .delete( upcomingEventController.hideUpcomingEventByID)

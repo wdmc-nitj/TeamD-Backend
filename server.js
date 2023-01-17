@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const mongoose = require('mongoose');
 
 const admissionsRoutes = require('./routes/admissionsRoutes');
-const MoURoutes = require('./routes/MoURoutes');
+const MOUsRoutes = require('./routes/MOUsRoutes');
 const researchRoutes = require('./routes/researchRoutes');
 const recruitmentsRoutes = require('./routes/recruitmentsRoutes');
 
@@ -69,7 +69,7 @@ app.get('/health-check', (req, res) => res.send('OK'));
 
 // routes
 app.use('/admissions', admissionsRoutes);
-app.use('/MoU', MoURoutes);
+app.use('/MOUs', MOUsRoutes);
 app.use('/research', researchRoutes);
 app.use('/recruitments', recruitmentsRoutes);
 

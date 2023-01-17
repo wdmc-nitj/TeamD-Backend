@@ -7,7 +7,7 @@ const MoUsController = require('../controllers/MoUsController');
 MoURouter.route('/create')
     .post(MoUsController.createMoU);
 
-MoURouter.route('/id/:id')
+MoURouter.route('/MOU')
     .get(MoUsController.getMoUById)
     .patch(MoUsController.editMoU)
     .delete(MoUsController.hideMoU)

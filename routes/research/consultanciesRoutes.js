@@ -5,7 +5,7 @@ const consultancyController = require('../../controllers/research/consultancyCon
 ConsultancyRouter.route('/get')
     .get(consultancyController.getAllConsultancies);
 
-ConsultancyRouter.route('/year/:startYear')
+ConsultancyRouter.route('/year')
     .get(consultancyController.getVisibleConsultanciesInStartYear);
 
 ConsultancyRouter.route('/groupByYear')
@@ -14,7 +14,7 @@ ConsultancyRouter.route('/groupByYear')
 ConsultancyRouter.route('/create')
     .post(consultancyController.createConsultancy);
 
-ConsultancyRouter.route('/id/:id')
+ConsultancyRouter.route('/consultancy')
     .get(consultancyController.getConsultancyByID)
     .patch(consultancyController.updateConsultancyByID)
     .delete(consultancyController.hideConsultancyByID)

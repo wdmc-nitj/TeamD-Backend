@@ -6,7 +6,7 @@ const helplineController = require('../../controllers/admissions/helplineControl
 
 helplineRouter.route('/create').post(helplineController.createHelpline);
 
-helplineRouter.route('/id/:id')
+helplineRouter.route('/helpline')
     .get(helplineController.getHelplineById)
     .patch(helplineController.editHelpline)
     .delete(helplineController.hideHelpline)
