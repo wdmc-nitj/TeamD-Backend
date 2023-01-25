@@ -78,3 +78,8 @@ app.use('/recruitments', recruitmentsRoutes);
 // 404 error
 app.use((req, res) => res.status(404).json(`Cannot ${req.method} ${req.url}`));
 
+// error handling
+app.use((err, req, res, next) => {
+    console.log(err);
+    res.status(500).json('Internal server error');
+});
