@@ -2,10 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 
-const admissionsRoutes = require('./routes/admissionsRoutes');
-const MOUsRoutes = require('./routes/MOUsRoutes');
-const researchRoutes = require('./routes/researchRoutes');
-const recruitmentsRoutes = require('./routes/recruitmentsRoutes');
+const mainRouter = require('./routes');
 
 const app = express();
 const Token = require('./models/token');
@@ -69,11 +66,7 @@ app.use((req, res, next) => {
 app.get('/health-check', (req, res) => res.send('OK'));
 
 // routes
-app.use('/admissions', admissionsRoutes);
-app.use('/MOUs', MOUsRoutes);
-app.use('/research', researchRoutes);
-app.use('/recruitments', recruitmentsRoutes);
-
+app.use(mainRouter);
 
 // 404 error
 app.use((req, res) => res.status(404).json(`Cannot ${req.method} ${req.url}`));
