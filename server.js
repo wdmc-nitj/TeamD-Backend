@@ -13,7 +13,7 @@ const dbPass = process.env.atlasPassword;
 const clusterName = process.env.atlasClusterName;
 const dbName = process.env.atlasDBName;
 const dbURI = `mongodb+srv://${dbUser}:${dbPass}@${clusterName}/${dbName}?retryWrites=true&w=majority`;
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 // connect to MongoDB
 mongoose.connect(dbURI)
