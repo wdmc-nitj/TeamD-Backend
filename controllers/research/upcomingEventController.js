@@ -4,7 +4,11 @@ const UpcomingEvent = require('../../models/research/upcomingEvents');
 const getAllUpcomingEvents = (req, res) => {
     // filter by req.query.visible if it is not all
     let filter = {};
-
+    
+    //filter by req.query
+    if(req.query.category !=='all'){
+        filter.category = req.query.category;
+    }
     if (req.query.visible === 'visible') {
         filter.visible = true;
     } else if (req.query.visible === 'hidden') {
