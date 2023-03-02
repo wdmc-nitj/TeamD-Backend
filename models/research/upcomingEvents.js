@@ -6,7 +6,7 @@ const upcomingEventSchema = new Schema({
         type: String,
         required: true
     },
-    dateofEvent: {
+    dateOfEvent: {
         type: String,
         required: true,
         validate: {
@@ -27,7 +27,7 @@ const upcomingEventSchema = new Schema({
         type: String,
         required: true
     },
-    timeofEvent: {   // time of event
+    timeOfEvent: {   // time of event
         type: String,
         required: true
     },
