@@ -31,12 +31,12 @@ const upcomingEventSchema = new Schema({
         type: String,
         required: true,
         validate: {
-            // hh:mm
+            // hh:mm 12 hour format with AM/PM
             validator: function (v) {
-                const timeRegex = /^\d{1,2}:\d{2}$/;
+                const timeRegex = /^(1[0-2]|0?[1-9]):([0-5]?[0-9])\s?(AM|PM|am|pm)$/;
                 return timeRegex.test(v);
             },
-            message: props => `${props.value} is not a valid time! Please enter in hh:mm format.`
+            message: props => `${props.value} is not a valid time! Pleae enter in hh:mm fomat with AM/PM.`
         }
     },
     category: {     // category of Events
