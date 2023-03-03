@@ -29,7 +29,15 @@ const upcomingEventSchema = new Schema({
     },
     timeOfEvent: {   // time of event
         type: String,
-        required: true
+        required: true,
+        validate: {
+            // hh:mm
+            validator: function (v) {
+                const timeRegex = /^\d{1,2}:\d{2}$/;
+                return timeRegex.test(v);
+            },
+            message: props => `${props.value} is not a valid time! Please enter in hh:mm format.`
+        }
     },
     category: {     // category of Events
         type: String,
