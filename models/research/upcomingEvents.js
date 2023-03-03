@@ -42,7 +42,7 @@ const upcomingEventSchema = new Schema({
     category: {     // category of Events
         type: String,
         required: true,
-        enum: ['conferences','seminars' ,'stc_fdp','workshops']
+        enum: ['conference','seminar' ,'stc_fdp','workshop']
     },
     visible: {
         type: Boolean,
