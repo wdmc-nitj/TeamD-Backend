@@ -109,11 +109,27 @@ const deleteUpcomingEventByID = (req, res) => {
         .catch((err) => sendError(res, err));
 };
 
+// new function which will trigger the organized property
+
+const isEventOrganized = (req,res) => {
+    const id = req.query.id;
+
+    if (!validateID(id)) {
+        return sendError(res, `Invalid ID: ${id}`);
+    }
+     const current_date = new Date();
+     const Event_date = req.query.dateOfEvent;
+     if(current_date > Event_date){
+        req.query.organized = true;
+     }
+
+};
 module.exports = {
     getAllUpcomingEvents,
     createUpcomingEvent,
     getUpcomingEventByID,
     updateUpcomingEventByID,
     hideUpcomingEventByID,
-    deleteUpcomingEventByID
+    deleteUpcomingEventByID,
+    isEventOrganized
 };
