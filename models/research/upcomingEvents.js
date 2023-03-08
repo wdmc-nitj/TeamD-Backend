@@ -19,9 +19,14 @@ const upcomingEventSchema = new Schema({
         }
 
     },
+    organized:{    // is event organized
+       type : Boolean,
+       required: true
+    },
     venue: {   // venue of event
         type: String,
-        required: true
+        required: true,
+        default: false       // set default as not organised
     },
     organiser: {   // organiser of event
         type: String,

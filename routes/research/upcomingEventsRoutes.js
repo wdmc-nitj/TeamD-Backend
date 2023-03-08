@@ -13,5 +13,6 @@ upcomingEventRouter.route('/event')
     .patch(upcomingEventController.updateUpcomingEventByID)
     .put(upcomingEventController.hideUpcomingEventByID)
     .delete(upcomingEventController.deleteUpcomingEventByID);
+    
 
 module.exports = upcomingEventRouter;
