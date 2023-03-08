@@ -14,7 +14,7 @@ recruitmentUpdateRouter.route('/categorised')
 recruitmentUpdateRouter.route('/update')
     .get(recruitmentUpdateController.getRecruitmentUpdateByID)
     .patch(recruitmentUpdateController.editRecruitmentUpdateByID)
-    .delete(recruitmentUpdateController.hideRecruitmentUpdateByID)
-    .put(recruitmentUpdateController.deleteRecruitmentUpdateByID);
+    .put(recruitmentUpdateController.hideRecruitmentUpdateByID)
+    .delete(recruitmentUpdateController.deleteRecruitmentUpdateByID);
 
 module.exports = recruitmentUpdateRouter;

@@ -10,8 +10,8 @@ MoURouter.route('/create')
 MoURouter.route('/MOU')
     .get(MoUsController.getMoUById)
     .patch(MoUsController.editMoU)
-    .delete(MoUsController.hideMoU)
-    .put(MoUsController.deleteMoU);
+    .put(MoUsController.hideMoU)
+    .delete(MoUsController.deleteMoU);
 
 MoURouter.route('/get')
     .get(MoUsController.getMoUs); // visible can be 'visible', 'hidden' or 'all

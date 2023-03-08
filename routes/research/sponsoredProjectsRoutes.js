@@ -17,7 +17,7 @@ sponsoredProjectsRouter.route('/groupedByYear')
 sponsoredProjectsRouter.route('/project')
     .get(sponsoredProjectsController.getSponsoredProjectByID)
     .patch(sponsoredProjectsController.updateSponsoredProjectByID)
-    .delete(sponsoredProjectsController.hideSponsoredProjectByID)
-    .put(sponsoredProjectsController.deleteSponsoredProjectByID);
+    .put(sponsoredProjectsController.hideSponsoredProjectByID)
+    .delete(sponsoredProjectsController.deleteSponsoredProjectByID);
 
 module.exports = sponsoredProjectsRouter;

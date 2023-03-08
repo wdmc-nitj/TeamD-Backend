@@ -9,8 +9,8 @@ RefereedResearchRouter.route('/create')
 RefereedResearchRouter.route('/research')
     .get(refereedResearchController.getRefereedResearchById)
     .patch(refereedResearchController.editRefereedResearch)
-    .delete(refereedResearchController.hideRefereedResearch)
-    .put(refereedResearchController.deleteRefereedResearch);
+    .put(refereedResearchController.hideRefereedResearch)
+    .delete(refereedResearchController.deleteRefereedResearch);
 
 RefereedResearchRouter.route('/get')
     .get(refereedResearchController.getAllRefereedResearches);

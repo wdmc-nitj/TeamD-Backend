@@ -9,8 +9,8 @@ linksRouter.route('/create').post(linksController.createLink);
 linksRouter.route('/link')
     .get(linksController.getLinkById)
     .patch(linksController.editLink)
-    .delete(linksController.hideLink)
-    .put(linksController.deleteLink);
+    .put(linksController.hideLink)
+    .delete(linksController.deleteLink);
 
 linksRouter.route('/get').get(linksController.getLinks); // visible can be 'visible', 'hidden' or 'all'
 

@@ -17,7 +17,7 @@ ConsultancyRouter.route('/create')
 ConsultancyRouter.route('/consultancy')
     .get(consultancyController.getConsultancyByID)
     .patch(consultancyController.updateConsultancyByID)
-    .delete(consultancyController.hideConsultancyByID)
-    .put(consultancyController.deleteConsultancyByID);
+    .put(consultancyController.hideConsultancyByID)
+    .delete(consultancyController.deleteConsultancyByID);
 
 module.exports = ConsultancyRouter;

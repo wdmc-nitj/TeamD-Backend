@@ -9,8 +9,8 @@ helplineRouter.route('/create').post(helplineController.createHelpline);
 helplineRouter.route('/helpline')
     .get(helplineController.getHelplineById)
     .patch(helplineController.editHelpline)
-    .delete(helplineController.hideHelpline)
-    .put(helplineController.deleteHelpline);
+    .put(helplineController.hideHelpline)
+    .delete(helplineController.deleteHelpline);
 
 helplineRouter.route('/get').get(helplineController.getHelplines); // visible can be 'visible', 'hidden' or 'all'
 

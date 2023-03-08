@@ -9,8 +9,8 @@ updatesRouter.route('/create').post(updatesController.createUpdate);
 updatesRouter.route('/update')
     .get(updatesController.getUpdateById)
     .patch(updatesController.editUpdate)
-    .delete(updatesController.hideUpdate)
-    .put(updatesController.deleteUpdate);
+    .put(updatesController.hideUpdate)
+    .delete(updatesController.deleteUpdate);
 
 updatesRouter.route('/get').get(updatesController.getUpdates); // visible can be 'visible', 'hidden' or 'all'
 

@@ -15,7 +15,7 @@ citedResearchRouter.route('/get')
 citedResearchRouter.route('/research')
     .get(citedResearchController.getCitedResearchById)
     .patch(citedResearchController.editCitedResearch)
-    .delete(citedResearchController.hideCitedResearch)
-    .put(citedResearchController.deleteCitedResearch);
+    .put(citedResearchController.hideCitedResearch)
+    .delete(citedResearchController.deleteCitedResearch);
 
 module.exports = citedResearchRouter;
