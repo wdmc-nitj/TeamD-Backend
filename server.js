@@ -15,6 +15,8 @@ const dbName = process.env.atlasDBName;
 const dbURI = `mongodb+srv://${dbUser}:${dbPass}@${clusterName}/${dbName}?retryWrites=true&w=majority`;
 const PORT = 3000;
 
+mongoose.set('strictQuery', false);
+
 // connect to MongoDB
 mongoose.connect(dbURI)
     .then((result) => {
