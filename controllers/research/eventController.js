@@ -1,5 +1,5 @@
 const { sendError, validateID } = require('../../utils');
-const event = require('../../models/research/events');
+const Event = require('../../models/research/events');
 
 const createTimeStamp = (date, time) => {
     // date and time are strings in DD-MM-YYYY and HH:MM format
@@ -43,7 +43,7 @@ const getAllevents = (req, res) => {
         return sendError(res, `Invalid value for upcoming: ${req.query.upcoming}`);
     }
     
-    event
+    Event
         .find(filter)
         .sort({ updatedAt: -1 })
         .then((events) => res.json(events))
@@ -58,7 +58,7 @@ const createevent = (req, res) => {
     delete req.body.date;
     delete req.body.time;
 
-    const newevent = new event(req.body);
+    const newevent = new Event(req.body);
 
     newevent.save()
         .then((createdevent) => res.status(201).json(createdevent))
@@ -72,7 +72,7 @@ const geteventByID = (req, res) => {
         return sendError(res, `Invalid ID: ${id}`);
     }
 
-    event
+    Event
         .findById(id)
         .then((event) => {
             if (!event) {
@@ -92,7 +92,7 @@ const updateeventByID = (req, res) => {
     }
 
     req.body.updatedAt = Date.now();
-    event
+    Event
         .findByIdAndUpdate(id, req.body, { new: true })
         .then((updatedevent) => {
             if (!updatedevent) {
@@ -111,7 +111,7 @@ const hideeventByID = (req, res) => {
         return sendError(res, `Invalid ID: ${id}`);
     }
 
-    event
+    Event
         .findByIdAndUpdate(id, { visible: false }, { new: true })
         .then((updatedevent) => {
             if (!updatedevent) {
@@ -130,7 +130,7 @@ const deleteeventByID = (req, res) => {
         return sendError(res, `Invalid ID: ${id}`);
     }
 
-    event
+    Event
         .findByIdAndDelete(id)
         .then((deletedevent) => {
             if (!deletedevent) {
