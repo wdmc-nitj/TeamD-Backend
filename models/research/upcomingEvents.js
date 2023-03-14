@@ -6,18 +6,9 @@ const upcomingEventSchema = new Schema({
         type: String,
         required: true
     },
-    dateOfEvent: {
-        type: String,
-        required: true,
-        validate: {
-            // dd-mm-yyyy
-            validator: function (v) {
-                const dateRegex = /^\d{1,2}-\d{1,2}-\d{4}$/;
-                return dateRegex.test(v);
-            },
-            message: props => `${props.value} is not a valid date! Please enter in dd-mm-yyyy format.`
-        }
-
+    dateTime: {   // date and time of event
+        type: Date,
+        required: true
     },
     venue: {   // venue of event
         type: String,
@@ -27,22 +18,10 @@ const upcomingEventSchema = new Schema({
         type: String,
         required: true
     },
-    timeOfEvent: {   // time of event
-        type: String,
-        required: true,
-        validate: {
-            // hh:mm 12 hour format with AM/PM
-            validator: function (v) {
-                const timeRegex = /^(1[0-2]|0?[1-9]):([0-5]?[0-9])\s?(AM|PM|am|pm)$/;
-                return timeRegex.test(v);
-            },
-            message: props => `${props.value} is not a valid time! Pleae enter in hh:mm fomat with AM/PM.`
-        }
-    },
     category: {     // category of Events
         type: String,
         required: true,
-        enum: ['conference','seminar' ,'stc_fdp','workshop']
+        enum: ['conference', 'seminar', 'stc_fdp', 'workshop']
     },
     visible: {
         type: Boolean,

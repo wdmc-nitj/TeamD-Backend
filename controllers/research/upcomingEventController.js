@@ -1,12 +1,29 @@
 const { sendError, validateID } = require('../../utils');
 const UpcomingEvent = require('../../models/research/upcomingEvents');
 
+const createTimeStamp = (date, time) => {
+    // date and time are strings in DD-MM-YYYY and HH:MM format
+    const dateParts = date.split('-');
+    const timeParts = time.split(':');
+
+    const dateTime = new Date(
+        parseInt(dateParts[2]),
+        parseInt(dateParts[1]) - 1,
+        parseInt(dateParts[0]),
+        parseInt(timeParts[0]),
+        parseInt(timeParts[1])
+    );
+
+    return dateTime;
+
+};
+
 const getAllUpcomingEvents = (req, res) => {
     // filter by req.query.visible if it is not all
     let filter = {};
-    
+
     //filter by req.query
-    if(req.query.category !=='all'){
+    if (req.query.category !== 'all') {
         filter.category = req.query.category;
     }
     if (req.query.visible === 'visible') {
@@ -25,6 +42,13 @@ const getAllUpcomingEvents = (req, res) => {
 };
 
 const createUpcomingEvent = (req, res) => {
+    // create timestamp from date and time
+    req.body.dateTime = createTimeStamp(req.body.date, req.body.time);
+    
+    // delete date and time from req.body
+    delete req.body.date;
+    delete req.body.time;
+
     const newUpcomingEvent = new UpcomingEvent(req.body);
 
     newUpcomingEvent.save()
