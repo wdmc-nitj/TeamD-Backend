@@ -1,5 +1,5 @@
 const { sendError, validateID } = require('../../utils');
-const UpcomingEvent = require('../../models/research/upcomingEvents');
+const event = require('../../models/research/events');
 
 const createTimeStamp = (date, time) => {
     // date and time are strings in DD-MM-YYYY and HH:MM format
@@ -18,7 +18,7 @@ const createTimeStamp = (date, time) => {
 
 };
 
-const getAllUpcomingEvents = (req, res) => {
+const getAllevents = (req, res) => {
     // filter by req.query.visible if it is not all
     let filter = {};
 
@@ -33,49 +33,58 @@ const getAllUpcomingEvents = (req, res) => {
     } else if (req.query.visible !== 'all') {
         return sendError(res, `Invalid value for visible: ${req.query.visible}`);
     }
-
-    UpcomingEvent
+    
+    // filter upcoming and past events
+    if (req.query.upcoming === 'true') {
+        filter.dateTime = { $gte: new Date() };
+    } else if (req.query.upcoming === 'false') {
+        filter.dateTime = { $lt: new Date() };
+    } else if (req.query.upcoming !== 'all') {
+        return sendError(res, `Invalid value for upcoming: ${req.query.upcoming}`);
+    }
+    
+    event
         .find(filter)
         .sort({ updatedAt: -1 })
-        .then((upcomingEvents) => res.json(upcomingEvents))
+        .then((events) => res.json(events))
         .catch((err) => sendError(res, err));
 };
 
-const createUpcomingEvent = (req, res) => {
+const createevent = (req, res) => {
     // create timestamp from date and time
     req.body.dateTime = createTimeStamp(req.body.date, req.body.time);
-    
+
     // delete date and time from req.body
     delete req.body.date;
     delete req.body.time;
 
-    const newUpcomingEvent = new UpcomingEvent(req.body);
+    const newevent = new event(req.body);
 
-    newUpcomingEvent.save()
-        .then((createdUpcomingEvent) => res.status(201).json(createdUpcomingEvent))
+    newevent.save()
+        .then((createdevent) => res.status(201).json(createdevent))
         .catch((err) => sendError(res, err));
 };
 
-const getUpcomingEventByID = (req, res) => {
+const geteventByID = (req, res) => {
     const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);
     }
 
-    UpcomingEvent
+    event
         .findById(id)
-        .then((upcomingEvent) => {
-            if (!upcomingEvent) {
-                return sendError(res, `UpcomingEvent not found with ID: ${id}`);
+        .then((event) => {
+            if (!event) {
+                return sendError(res, `event not found with ID: ${id}`);
             }
 
-            res.json(upcomingEvent);
+            res.json(event);
         })
         .catch((err) => sendError(res, err));
 };
 
-const updateUpcomingEventByID = (req, res) => {
+const updateeventByID = (req, res) => {
     const id = req.query.id;
 
     if (!validateID(id)) {
@@ -83,61 +92,61 @@ const updateUpcomingEventByID = (req, res) => {
     }
 
     req.body.updatedAt = Date.now();
-    UpcomingEvent
+    event
         .findByIdAndUpdate(id, req.body, { new: true })
-        .then((updatedUpcomingEvent) => {
-            if (!updatedUpcomingEvent) {
-                return sendError(res, `UpcomingEvent not found with ID: ${id}`);
+        .then((updatedevent) => {
+            if (!updatedevent) {
+                return sendError(res, `event not found with ID: ${id}`);
             }
 
-            res.json(updatedUpcomingEvent);
+            res.json(updatedevent);
         })
         .catch((err) => sendError(res, err));
 };
 
-const hideUpcomingEventByID = (req, res) => {
+const hideeventByID = (req, res) => {
     const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);
     }
 
-    UpcomingEvent
+    event
         .findByIdAndUpdate(id, { visible: false }, { new: true })
-        .then((updatedUpcomingEvent) => {
-            if (!updatedUpcomingEvent) {
-                return sendError(res, `UpcomingEvent not found with ID: ${id}`);
+        .then((updatedevent) => {
+            if (!updatedevent) {
+                return sendError(res, `event not found with ID: ${id}`);
             }
 
-            res.json(updatedUpcomingEvent);
+            res.json(updatedevent);
         })
         .catch((err) => sendError(res, err));
 };
 
-const deleteUpcomingEventByID = (req, res) => {
+const deleteeventByID = (req, res) => {
     const id = req.query.id;
 
     if (!validateID(id)) {
         return sendError(res, `Invalid ID: ${id}`);
     }
 
-    UpcomingEvent
+    event
         .findByIdAndDelete(id)
-        .then((deletedUpcomingEvent) => {
-            if (!deletedUpcomingEvent) {
-                return sendError(res, `UpcomingEvent not found with ID: ${id}`);
+        .then((deletedevent) => {
+            if (!deletedevent) {
+                return sendError(res, `event not found with ID: ${id}`);
             }
 
-            res.json(deletedUpcomingEvent);
+            res.json(deletedevent);
         })
         .catch((err) => sendError(res, err));
 };
 
 module.exports = {
-    getAllUpcomingEvents,
-    createUpcomingEvent,
-    getUpcomingEventByID,
-    updateUpcomingEventByID,
-    hideUpcomingEventByID,
-    deleteUpcomingEventByID
+    getAllevents,
+    createevent,
+    geteventByID,
+    updateeventByID,
+    hideeventByID,
+    deleteeventByID
 };

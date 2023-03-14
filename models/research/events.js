@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const upcomingEventSchema = new Schema({
+const eventSchema = new Schema({
     title: {   // title of event
         type: String,
         required: true
@@ -30,6 +30,6 @@ const upcomingEventSchema = new Schema({
     }
 });
 
-const UpcomingEvent = mongoose.model('UpcomingEvent', upcomingEventSchema);
+const event = mongoose.model('event', eventSchema);
 
-module.exports = UpcomingEvent;
+module.exports = event;
