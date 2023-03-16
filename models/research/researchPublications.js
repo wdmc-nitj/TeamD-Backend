@@ -132,6 +132,10 @@ const citedResearchSchema = new Schema({
         type:String,
         default: null
     },
+    srcEmail :{
+        type:String,
+        default:null
+    },
     order :{
         type:Number,
         default:0
@@ -178,6 +182,10 @@ const refereedResearchSchema = new Schema({
     srcDes :{
         type:String,
         default: null
+    },
+    srcEmail :{
+        type:String,
+        default:null
     },
     order :{
         type:Number,

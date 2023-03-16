@@ -36,6 +36,10 @@ const recruitmentUpdateSchema = new Schema({
         type:String,
         default: null
     },
+    srcEmail :{
+        type:String,
+        default:null
+    },
     order :{
         type:Number,
         default:0
