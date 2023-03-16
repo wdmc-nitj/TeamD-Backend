@@ -52,7 +52,7 @@ const editUpdate = (req, res) => {
 const hideUpdate = (req, res) => {
     const id = req.query.id;
     validateID(id).then(() => {
-        admissionUpdate.findByIdAndUpdate(id, { visible: false }, { new: true })
+        admissionUpdate.findByIdAndUpdate(id, { visible: false , disabledAt: Date.now() }, { new: true })
             .then((result) => res.json(result))
             .catch((err) => sendError(res, err));
     })

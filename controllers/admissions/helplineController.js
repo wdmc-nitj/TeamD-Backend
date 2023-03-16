@@ -53,7 +53,7 @@ const editHelpline = (req, res) => {
 const hideHelpline = (req, res) => {
     const id = req.query.id;
     validateID(id).then(() => {
-        admissionHelpline.findByIdAndUpdate(id, { visible: false }, { new: true })
+        admissionHelpline.findByIdAndUpdate(id, { visible: false , disabledAt: Date.now() }, { new: true })
             .then((helpline) => res.json(helpline))
             .catch((err) => sendError(res, err));
     })

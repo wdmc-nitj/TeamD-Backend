@@ -51,7 +51,7 @@ const hideLink = (req, res) => {
 
     const id = req.query.id;
     validateID(id).then(() => {
-        admissionLink.findByIdAndUpdate(id, { visible: false }, { new: true, runValidators: true })
+        admissionLink.findByIdAndUpdate(id, { visible: false , disabledAt: Date.now() }, { new: true, runValidators: true })
             .then((updatedLink) => res.json(updatedLink))
             .catch((err) => sendError(res, err));
     })

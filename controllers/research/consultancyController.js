@@ -155,7 +155,7 @@ const hideConsultancyByID = (req, res) => {
     }
 
     Consultancy
-        .findByIdAndUpdate(id, { visible: false }, { new: true })
+        .findByIdAndUpdate(id, { visible: false , disabledAt: Date.now() }, { new: true })
         .then((consultancy) => {
             if (!consultancy) {
                 return sendError(res, `Consultancy not found with ID: ${id}`);

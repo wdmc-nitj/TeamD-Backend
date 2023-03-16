@@ -56,7 +56,7 @@ const editMoU = (req, res) => {
 const hideMoU = (req, res) => {
     const id = req.query.id;
     validateID(id).then(() => {
-        MoU.findByIdAndUpdate(id, { visible: false }, { new: true })
+        MoU.findByIdAndUpdate(id, { visible: false , disabledAt: Date.now() }, { new: true })
             .then((updatedMoU) => res.json(updatedMoU))
             .catch((err) => sendError(res, err));
     })

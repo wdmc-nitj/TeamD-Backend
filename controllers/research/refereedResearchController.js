@@ -61,7 +61,7 @@ const hideRefereedResearch = (req, res) => {
 
     validateID(id)
         .then(() => RefereedResearch
-            .findByIdAndUpdate(id, { visible: false }, { new: true })
+            .findByIdAndUpdate(id, { visible: false , disabledAt: Date.now() }, { new: true })
             .then((hiddenRefereedResearch) => res.json(hiddenRefereedResearch))
             .catch((err) => sendError(res, err)))
         .catch((err) => sendError(res, err));
