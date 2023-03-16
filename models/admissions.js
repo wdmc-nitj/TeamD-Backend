@@ -51,6 +51,10 @@ const updateSchema = new Schema({
         type:String,
         default: null
     },
+    srcEmail :{
+        type:String,
+        default:null
+    },
     order :{
         type:Number,
         default:0
@@ -101,6 +105,10 @@ const linkSchema = new Schema({
     srcDes :{
         type:String,
         default: null
+    },
+    srcEmail :{
+        type:String,
+        default:null
     },
     order :{
         type:Number,
@@ -193,6 +201,10 @@ const helplineSchema = new Schema({
     srcDes :{
         type:String,
         default: null
+    },
+    srcEmail :{
+        type:String,
+        default:null
     },
     order :{
         type:Number,
