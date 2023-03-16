@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const cors = require('cors');
 
 const mainRouter = require('./routes');
 
@@ -30,13 +31,12 @@ mongoose.connect(dbURI)
 app.use(express.json());
 app.use(morgan('dev'));
 
-// add access control headers
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    next(); 
-});
+// add access control headers from all origins
+app.use(cors(
+    {
+        origin: '*',
+    }
+));
 
 // Token authentication for non GET requests
 app.use((req, res, next) => {
