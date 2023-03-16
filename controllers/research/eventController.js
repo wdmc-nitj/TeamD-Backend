@@ -112,7 +112,7 @@ const hideeventByID = (req, res) => {
     }
 
     Event
-        .findByIdAndUpdate(id, { visible: false }, { new: true })
+        .findByIdAndUpdate(id, { visible: false , disabledAt: Date.now() }, { new: true })
         .then((updatedevent) => {
             if (!updatedevent) {
                 return sendError(res, `event not found with ID: ${id}`);

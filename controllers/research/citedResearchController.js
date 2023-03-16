@@ -69,7 +69,7 @@ const hideCitedResearch = (req, res) => {
 
     validateID(id)
         .then(() => CitedResearch
-            .findByIdAndUpdate(id, { visible: false }, { new: true }))
+            .findByIdAndUpdate(id, { visible: false , disabledAt: Date.now() }, { new: true }))
         .then((updatedCitedResearch) => res.json(updatedCitedResearch))
         .catch((err) => sendError(res, err));
 };
