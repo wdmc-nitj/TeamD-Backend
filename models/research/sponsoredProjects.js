@@ -21,6 +21,26 @@ const SponsoredProjectSchema = new Schema({
     visible: {
         type: Boolean,
         default: true
+    },
+    disabledAt:{
+        type: Date,
+        default: null
+    },
+    srcName:{
+        type:String,
+        default: null
+    },
+    srcDept:{
+        type:String,
+        default:null
+    },
+    srcDes :{
+        type:String,
+        default: null
+    },
+    order :{
+        type:Number,
+        default:0
     }
     }, { timestamps: true });
 

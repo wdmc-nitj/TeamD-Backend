@@ -41,6 +41,26 @@ const MoUSchema = new Schema({
                 return typeof v === 'boolean';
             }
         }
+    },
+    disabledAt:{
+        type: Date,
+        default: null
+    },
+    srcName:{
+        type:String,
+        default: null
+    },
+    srcDept:{
+        type:String,
+        default:null
+    },
+    srcDes :{
+        type:String,
+        default: null
+    },
+    order :{
+        type:Number,
+        default:0
     }
 }, { timestamps: true });
 
