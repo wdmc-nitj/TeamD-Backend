@@ -27,6 +27,26 @@ const eventSchema = new Schema({
         type: Boolean,
         required: true,
         default: true
+    },
+    disabledAt:{
+        type: Date,
+        default: null
+    },
+    srcName:{
+        type:String,
+        default: null
+    },
+    srcDept:{
+        type:String,
+        default:null
+    },
+    srcDes :{
+        type:String,
+        default: null
+    },
+    order :{
+        type:Number,
+        default:0
     }
 });
 

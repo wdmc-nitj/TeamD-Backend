@@ -35,6 +35,26 @@ const updateSchema = new Schema({
         notEmpty: true,
         enum: ['BTECH', 'MTECH-CCMT', 'MTECH-SELF', 'MSC', 'MBA', 'PHD', 'FOREIGN'],        
     },
+    disabledAt:{
+        type: Date,
+        default: null
+    },
+    srcName:{
+        type:String,
+        default: null
+    },
+    srcDept:{
+        type:String,
+        default:null
+    },
+    srcDes :{
+        type:String,
+        default: null
+    },
+    order :{
+        type:Number,
+        default:0
+    }
 }, { timestamps: true });
 
 const linkSchema = new Schema({
@@ -66,6 +86,26 @@ const linkSchema = new Schema({
             message: props => `${props.value} is not a valid boolean!`
         }
     },
+    disabledAt:{
+        type: Date,
+        default: null
+    },
+    srcName:{
+        type:String,
+        default: null
+    },
+    srcDept:{
+        type:String,
+        default:null
+    },
+    srcDes :{
+        type:String,
+        default: null
+    },
+    order :{
+        type:Number,
+        default:0
+    }
 }, { timestamps: true });
 
 const helplineSchema = new Schema({
@@ -138,6 +178,26 @@ const helplineSchema = new Schema({
             message: props => `${props.value} is not a valid boolean!`
         }
     },
+    disabledAt:{
+        type: Date,
+        default: null
+    },
+    srcName:{
+        type:String,
+        default: null
+    },
+    srcDept:{
+        type:String,
+        default:null
+    },
+    srcDes :{
+        type:String,
+        default: null
+    },
+    order :{
+        type:Number,
+        default:0
+    }
 }, { timestamps: true });
 
 const helpline = mongoose.model('admissionHelpline', helplineSchema);
