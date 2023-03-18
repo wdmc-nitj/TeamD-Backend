@@ -49,11 +49,17 @@ const editUpdate = (req, res) => {
         .catch((err) => sendError(res, err));
 };
 
-const hideUpdate = (req, res) => {
+const toggleUpdateVisibility = (req, res) => {
     const id = req.query.id;
     validateID(id).then(() => {
-        admissionUpdate.findByIdAndUpdate(id, { visible: false , disabledAt: Date.now() }, { new: true })
-            .then((result) => res.json(result))
+        admissionUpdate.findById(id)
+            .then((update) => {
+                update.visible = !update.visible;
+                update.updatedAt = Date.now();
+                update.save()
+                    .then((result) => res.json(result))
+                    .catch((err) => sendError(res, err));
+            })
             .catch((err) => sendError(res, err));
     })
         .catch((err) => sendError(res, err));
@@ -74,6 +80,6 @@ module.exports = {
     getUpdates,
     getUpdateById,
     editUpdate,
-    hideUpdate,
+    toggleUpdateVisibility,
     deleteUpdate
 };

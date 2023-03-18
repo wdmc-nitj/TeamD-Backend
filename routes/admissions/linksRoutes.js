@@ -9,7 +9,7 @@ linksRouter.route('/create').post(linksController.createLink);
 linksRouter.route('/link')
     .get(linksController.getLinkById)
     .patch(linksController.editLink)
-    .put(linksController.hideLink)
+    .put(linksController.toggleLinkVisiblity)
     .delete(linksController.deleteLink);
 
 linksRouter.route('/get').get(linksController.getLinks); // visible can be 'visible', 'hidden' or 'all'

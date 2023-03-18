@@ -47,12 +47,17 @@ const editLink = (req, res) => {
         .catch((err) => sendError(res, err));
 }
 
-const hideLink = (req, res) => {
-
+const toggleLinkVisiblity = (req, res) => {
     const id = req.query.id;
     validateID(id).then(() => {
-        admissionLink.findByIdAndUpdate(id, { visible: false , disabledAt: Date.now() }, { new: true, runValidators: true })
-            .then((updatedLink) => res.json(updatedLink))
+        admissionLink.findById(id)
+            .then((link) => {
+                link.visible = !link.visible;
+                link.disabledAt = !link.visible ? Date.now() : null;
+                link.save()
+                    .then((updatedLink) => res.json(updatedLink))
+                    .catch((err) => sendError(res, err));
+            })
             .catch((err) => sendError(res, err));
     })
         .catch((err) => sendError(res, err));
@@ -74,6 +79,6 @@ module.exports = {
     getLinks,
     getLinkById,
     editLink,
-    hideLink,
+    toggleLinkVisiblity,
     deleteLink
 }

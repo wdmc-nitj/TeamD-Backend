@@ -50,14 +50,20 @@ const editHelpline = (req, res) => {
         .catch((err) => sendError(res, err));
 }
 
-const hideHelpline = (req, res) => {
+const toggleHelplineVisiblity = (req, res) => {
     const id = req.query.id;
     validateID(id).then(() => {
-        admissionHelpline.findByIdAndUpdate(id, { visible: false , disabledAt: Date.now() }, { new: true })
-            .then((helpline) => res.json(helpline))
+        admissionHelpline.findById(id)
+            .then((helpline) => {
+                helpline.visible = !helpline.visible;
+                helpline.disabledAt = !helpline.visible ? Date.now() : null;
+                helpline.save()
+                    .then((updatedHelpline) => res.json(updatedHelpline))
+                    .catch((err) => sendError(res, err));
+            })
             .catch((err) => sendError(res, err));
     })
-        .catch((err) => sendError(res, err));
+        .cath((err) => sendError(res, err));
 }
 
 const deleteHelpline = (req, res) => {
@@ -75,6 +81,6 @@ module.exports = {
     getHelplines,
     getHelplineById,
     editHelpline,
-    hideHelpline,
+    toggleHelplineVisiblity,
     deleteHelpline
 }
