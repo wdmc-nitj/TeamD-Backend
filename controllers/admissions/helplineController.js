@@ -63,7 +63,7 @@ const toggleHelplineVisiblity = (req, res) => {
             })
             .catch((err) => sendError(res, err));
     })
-        .cath((err) => sendError(res, err));
+        .catch((err) => sendError(res, err));
 }
 
 const deleteHelpline = (req, res) => {
