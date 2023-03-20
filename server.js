@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '.env' });
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
@@ -19,7 +20,8 @@ const PORT = 3000;
 mongoose.set('strictQuery', false);
 
 // connect to MongoDB
-mongoose.connect(dbURI)
+mongoose
+    .connect(dbURI)
     .then((result) => {
         app.listen(PORT);
         console.log(`Listening on port ${PORT}...`);
@@ -32,36 +34,35 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // add access control headers from all origins
-app.use(cors(
-    {
+app.use(
+    cors({
         origin: '*',
-    }
-));
+    })
+);
 
 // Token authentication for non GET requests
 app.use((req, res, next) => {
-
     if (req.method === 'GET') {
         return next();
     }
 
-    // fetch required token from database    
+    // fetch required token from database
     Token.findOne({ name: 'BearerToken' })
         .then((requiredToken) => {
             // check if token is valid if it exists
             if (!req.headers.authorization) {
                 return res.status(401).json('Token not found');
             }
-            if (req.headers.authorization.split(' ')[1] !== requiredToken.value) {
+            if (
+                req.headers.authorization.split(' ')[1] !== requiredToken.value
+            ) {
                 return res.status(401).json('Invalid token');
             }
             next();
-            
         })
         .catch((err) => {
             console.log(err);
         });
-
 });
 
 // health check
