@@ -11,6 +11,6 @@ mainRouter.use('/admissions', admissionsRoutes);
 mainRouter.use('/MOUs', MOUsRoutes);
 mainRouter.use('/research', researchRoutes);
 mainRouter.use('/recruitments', recruitmentsRoutes);
-mainRouter.use('alumni', alumniRoutes);
+mainRouter.use('/alumni', alumniRoutes);
 
 module.exports = mainRouter;
