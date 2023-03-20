@@ -1,4 +1,4 @@
-const admissionHelpline = require('../../models/admissions').helpline;
+const admissionHelpline = require('../../models/admissions/admissionHelpline');
 const { sendError, validateID } = require('../../utils');
 
 const createHelpline = (req, res) => {
