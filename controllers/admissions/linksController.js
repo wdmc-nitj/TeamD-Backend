@@ -1,4 +1,4 @@
-const admissionLink = require('../../models/admissions').link;
+const admissionLink = require('../../models/admissions/importantLink');
 const { sendError, validateID } = require('../../utils');
 
 const createLink = (req, res) => {

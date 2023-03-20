@@ -1,4 +1,4 @@
-const admissionHelpline = require('../../models/admissions').helpline;
+const admissionHelpline = require('../../models/admissions/admissionHelpline');
 const { sendError, validateID } = require('../../utils');
 
 const createHelpline = (req, res) => {
@@ -63,7 +63,7 @@ const toggleHelplineVisiblity = (req, res) => {
             })
             .catch((err) => sendError(res, err));
     })
-        .cath((err) => sendError(res, err));
+        .catch((err) => sendError(res, err));
 }
 
 const deleteHelpline = (req, res) => {
