@@ -20,7 +20,7 @@ const MoUSchema = new Schema({
             message: props => `${props.value} is not a valid date! Please enter in dd-mm-yyyy format.`
         }
     },
-    validity : {    // validity of MoU
+    validity: {    // validity of MoU
         type: String,
         required: true,
         notEmpty: true
@@ -29,7 +29,7 @@ const MoUSchema = new Schema({
         type: String,
         required: true,
         notEmpty: true,
-        enum: ['industries','indian_institutes' ,'international_institutes']
+        enum: ['industries', 'indian_institutes', 'international_institutes']
     },
     visible: {  // visibility of MoU
         type: Boolean,
@@ -42,29 +42,33 @@ const MoUSchema = new Schema({
             }
         }
     },
-    disabledAt:{
+    visibilityChangedAt: {
         type: Date,
         default: null
     },
-    srcName:{
-        type:String,
+    srcName: {
+        type: String,
         default: null
     },
-    srcDept:{
-        type:String,
-        default:null
-    },
-    srcDes :{
-        type:String,
+    srcDept: {
+        type: String,
         default: null
     },
-    srcEmail :{
-        type:String,
-        default:null
+    srcDes: {
+        type: String,
+        default: null
     },
-    order :{
-        type:Number,
-        default:0
+    srcEmail: {
+        type: String,
+        default: null
+    },
+    order: {
+        type: Number,
+        default: 0
+    },
+    newGIF: {
+        type: Boolean,
+        default: true
     }
 }, { timestamps: true });
 

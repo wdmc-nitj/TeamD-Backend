@@ -105,7 +105,7 @@ const hideSponsoredProjectByID = (req, res) => {
     }
 
     SponsoredProject
-        .findByIdAndUpdate(id, { visible: false , disabledAt: Date.now() }, { new: true })
+        .findByIdAndUpdate(id, { visible: false, visibilityChangedAt: Date.now() }, { new: true })
         .then(sponsoredProject => {
             if (!sponsoredProject) {
                 return sendError(res, `Sponsored Project not found with ID: ${id}`);

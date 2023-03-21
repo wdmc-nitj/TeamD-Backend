@@ -7,7 +7,7 @@ const ConsultancySchema = new Schema({
         required: true
     },
     clientOrg: {
-        type: String, 
+        type: String,
         required: true
     },
     title: {
@@ -30,29 +30,33 @@ const ConsultancySchema = new Schema({
         type: Boolean,
         default: true
     },
-    disabledAt:{
+    visibilityChangedAt: {
         type: Date,
         default: null
     },
-    srcName:{
-        type:String,
+    srcName: {
+        type: String,
         default: null
     },
-    srcDept:{
-        type:String,
-        default:null
-    },
-    srcDes :{
-        type:String,
+    srcDept: {
+        type: String,
         default: null
     },
-    srcEmail :{
-        type:String,
-        default:null
+    srcDes: {
+        type: String,
+        default: null
     },
-    order :{
-        type:Number,
-        default:0
+    srcEmail: {
+        type: String,
+        default: null
+    },
+    order: {
+        type: Number,
+        default: 0
+    },
+    newGIF: {
+        type: Boolean,
+        default: true
     }
 }, { timestamps: true });
 

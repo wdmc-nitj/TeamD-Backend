@@ -53,7 +53,7 @@ const toggleLinkVisiblity = (req, res) => {
         admissionLink.findById(id)
             .then((link) => {
                 link.visible = !link.visible;
-                link.disabledAt = !link.visible ? Date.now() : null;
+                link.visibilityChangedAt = !link.visible ? Date.now() : null;
                 link.save()
                     .then((updatedLink) => res.json(updatedLink))
                     .catch((err) => sendError(res, err));

@@ -101,7 +101,7 @@ const hideRecruitmentUpdateByID = (req, res) => {
     }
 
     RecruitmentUpdate
-        .findByIdAndUpdate(id, { visible: false , disabledAt: Date.now() }, { new: true })
+        .findByIdAndUpdate(id, { visible: false, visibilityChangedAt: Date.now() }, { new: true })
         .then((updatedRecruitmentUpdate) => {
             if (!updatedRecruitmentUpdate) {
                 return sendError(res, `Recruitment update not found with ID: ${id}`);

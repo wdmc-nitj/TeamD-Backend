@@ -71,29 +71,33 @@ const helplineSchema = new Schema({
             message: props => `${props.value} is not a valid boolean!`
         }
     },
-    disabledAt:{
+    visibilityChangedAt: {
         type: Date,
         default: null
     },
-    srcName:{
-        type:String,
+    srcName: {
+        type: String,
         default: null
     },
-    srcDept:{
-        type:String,
-        default:null
-    },
-    srcDes :{
-        type:String,
+    srcDept: {
+        type: String,
         default: null
     },
-    srcEmail :{
-        type:String,
-        default:null
+    srcDes: {
+        type: String,
+        default: null
     },
-    order :{
-        type:Number,
-        default:0
+    srcEmail: {
+        type: String,
+        default: null
+    },
+    order: {
+        type: Number,
+        default: 0
+    },
+    newGIF: {
+        type: Boolean,
+        default: true
     }
 }, { timestamps: true });
 

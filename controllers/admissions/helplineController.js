@@ -56,7 +56,7 @@ const toggleHelplineVisiblity = (req, res) => {
         admissionHelpline.findById(id)
             .then((helpline) => {
                 helpline.visible = !helpline.visible;
-                helpline.disabledAt = !helpline.visible ? Date.now() : null;
+                helpline.visibilityChangedAt = !helpline.visible ? Date.now() : null;
                 helpline.save()
                     .then((updatedHelpline) => res.json(updatedHelpline))
                     .catch((err) => sendError(res, err));

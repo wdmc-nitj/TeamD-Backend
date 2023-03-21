@@ -33,31 +33,35 @@ const updateSchema = new Schema({
         type: String,
         required: true,
         notEmpty: true,
-        enum: ['BTECH', 'MTECH-CCMT', 'MTECH-SELF', 'MSC', 'MBA', 'PHD', 'FOREIGN'],        
+        enum: ['BTECH', 'MTECH-CCMT', 'MTECH-SELF', 'MSC', 'MBA', 'PHD', 'FOREIGN'],
     },
-    disabledAt:{
+    visibilityChangedAt: {
         type: Date,
         default: null
     },
-    srcName:{
-        type:String,
+    srcName: {
+        type: String,
         default: null
     },
-    srcDept:{
-        type:String,
-        default:null
-    },
-    srcDes :{
-        type:String,
+    srcDept: {
+        type: String,
         default: null
     },
-    srcEmail :{
-        type:String,
-        default:null
+    srcDes: {
+        type: String,
+        default: null
     },
-    order :{
-        type:Number,
-        default:0
+    srcEmail: {
+        type: String,
+        default: null
+    },
+    order: {
+        type: Number,
+        default: 0
+    },
+    newGIF: {
+        type: Boolean,
+        default: true
     }
 }, { timestamps: true });
 

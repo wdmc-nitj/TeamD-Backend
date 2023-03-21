@@ -33,7 +33,7 @@ const getAllevents = (req, res) => {
     } else if (req.query.visible !== 'all') {
         return sendError(res, `Invalid value for visible: ${req.query.visible}`);
     }
-    
+
     // filter upcoming and past events
     if (req.query.upcoming === 'true') {
         filter.dateTime = { $gte: new Date() };
@@ -42,7 +42,7 @@ const getAllevents = (req, res) => {
     } else if (req.query.upcoming !== 'all') {
         return sendError(res, `Invalid value for upcoming: ${req.query.upcoming}`);
     }
-    
+
     // sort ascending if upcoming is true, descending otherwise
     Event
         .find(filter)
@@ -113,7 +113,7 @@ const hideeventByID = (req, res) => {
     }
 
     Event
-        .findByIdAndUpdate(id, { visible: false , disabledAt: Date.now() }, { new: true })
+        .findByIdAndUpdate(id, { visible: false, visibilityChangedAt: Date.now() }, { new: true })
         .then((updatedevent) => {
             if (!updatedevent) {
                 return sendError(res, `event not found with ID: ${id}`);
