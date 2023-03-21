@@ -59,7 +59,7 @@ const updateSchema = new Schema({
         type: Number,
         default: 0
     },
-    newGIF: {
+    new: {
         type: Boolean,
         default: true
     }
