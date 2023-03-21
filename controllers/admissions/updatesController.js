@@ -55,7 +55,6 @@ const toggleUpdateVisibility = (req, res) => {
         admissionUpdate.findById(id)
             .then((update) => {
                 update.visible = !update.visible;
-                update.updatedAt = Date.now();
                 update.save()
                     .then((result) => res.json(result))
                     .catch((err) => sendError(res, err));
