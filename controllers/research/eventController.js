@@ -43,9 +43,10 @@ const getAllevents = (req, res) => {
         return sendError(res, `Invalid value for upcoming: ${req.query.upcoming}`);
     }
     
+    // sort ascending if upcoming is true, descending otherwise
     Event
         .find(filter)
-        .sort({ updatedAt: -1 })
+        .sort({ dateTime: req.query.upcoming === 'true' ? 'asc' : 'desc' })
         .then((events) => res.json(events))
         .catch((err) => sendError(res, err));
 };
