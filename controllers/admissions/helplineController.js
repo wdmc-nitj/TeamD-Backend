@@ -50,13 +50,21 @@ const editHelpline = (req, res) => {
         .catch((err) => sendError(res, err));
 }
 
-const toggleHelplineVisiblity = (req, res) => {
+const editMetaData = (req, res) => {
     const id = req.query.id;
+
     validateID(id).then(() => {
         admissionHelpline.findById(id)
             .then((helpline) => {
-                helpline.visible = !helpline.visible;
-                helpline.visibilityChangedAt = !helpline.visible ? Date.now() : null;
+                if (req.query.action === 'toggleVisibility') {
+                    helpline.visible = !helpline.visible;
+                } else if (req.query.action === 'toggleNewGIF') {
+                    helpline.new = !helpline.new;
+                } else {
+                    return res.status(400).json({
+                        message: 'Invalid action'
+                    });
+                }
                 helpline.save()
                     .then((updatedHelpline) => res.json(updatedHelpline))
                     .catch((err) => sendError(res, err));
@@ -81,6 +89,6 @@ module.exports = {
     getHelplines,
     getHelplineById,
     editHelpline,
-    toggleHelplineVisiblity,
+    toggleHelplineVisiblity: editMetaData,
     deleteHelpline
 }
