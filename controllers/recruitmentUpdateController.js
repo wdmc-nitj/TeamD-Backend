@@ -93,22 +93,25 @@ const editRecruitmentUpdateByID = (req, res) => {
 };
 
 // Hide a recruitment update by ID
-const hideRecruitmentUpdateByID = (req, res) => {
+const editMetaData = (req, res) => {
     const id = req.query.id;
-
-    if (!validateID(id)) {
-        return sendError(res, `Invalid ID: ${id}`);
-    }
-
-    RecruitmentUpdate
-        .findByIdAndUpdate(id, { visible: false, visibilityChangedAt: Date.now() }, { new: true })
-        .then((updatedRecruitmentUpdate) => {
-            if (!updatedRecruitmentUpdate) {
-                return sendError(res, `Recruitment update not found with ID: ${id}`);
-            }
-
-            res.json(updatedRecruitmentUpdate);
-        })
+    validateID(id).then(() => {
+        RecruitmentUpdate.findById(id)
+            .then((recruitmentUpdate) => {
+                if (req.query.action === 'toggleVisibility') {
+                    recruitmentUpdate.visible = !recruitmentUpdate.visible;
+                    recruitmentUpdate.visibilityChangedAt = Date.now();
+                } else {
+                    return res.status(400).json({
+                        message: 'Invalid action'
+                    });
+                }
+                recruitmentUpdate.save()
+                    .then((updatedRecruitmentUpdate) => res.json(updatedRecruitmentUpdate))
+                    .catch((err) => sendError(res, err));
+            })
+            .catch((err) => sendError(res, err));
+    })
         .catch((err) => sendError(res, err));
 };
 
@@ -138,6 +141,6 @@ module.exports = {
     createRecruitmentUpdate,
     getRecruitmentUpdateByID,
     editRecruitmentUpdateByID,
-    hideRecruitmentUpdateByID,
+    hideRecruitmentUpdateByID: editMetaData,
     deleteRecruitmentUpdateByID
 };
