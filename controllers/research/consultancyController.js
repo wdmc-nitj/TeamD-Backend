@@ -147,22 +147,25 @@ const updateConsultancyByID = (req, res) => {
         .catch((err) => sendError(res, err));
 };
 
-const hideConsultancyByID = (req, res) => {
+const editMetaData = (req, res) => {
     const id = req.query.id;
-
-    if (!validateID(id)) {
-        return sendError(res, `Invalid ID: ${id}`);
-    }
-
-    Consultancy
-        .findByIdAndUpdate(id, { visible: false, visibilityChangedAt: Date.now() }, { new: true })
-        .then((consultancy) => {
-            if (!consultancy) {
-                return sendError(res, `Consultancy not found with ID: ${id}`);
-            }
-
-            res.json(consultancy);
-        })
+    validateID(id).then(() => {
+        Consultancy.findById(id)
+            .then((consultancy) => {
+                if (req.query.action === 'toggleVisibility') {
+                    consultancy.visible = !consultancy.visible;
+                    consultancy.visibilityChangedAt = Date.now();
+                } else {
+                    return res.status(400).json({
+                        message: 'Invalid action'
+                    });
+                }
+                consultancy.save()
+                    .then((updatedConsultancy) => res.json(updatedConsultancy))
+                    .catch((err) => sendError(res, err));
+            })
+            .catch((err) => sendError(res, err));
+    })
         .catch((err) => sendError(res, err));
 };
 
@@ -200,6 +203,6 @@ module.exports = {
     createConsultancy,
     getConsultancyByID,
     updateConsultancyByID,
-    hideConsultancyByID,
+    hideConsultancyByID: editMetaData,
     deleteConsultancyByID
 };

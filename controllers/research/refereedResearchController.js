@@ -56,14 +56,25 @@ const getRefereedResearchById = (req, res) => {
 };
 
 // Hide a refereed research
-const hideRefereedResearch = (req, res) => {
+const editMetaData = (req, res) => {
     const id = req.query.id;
-
-    validateID(id)
-        .then(() => RefereedResearch
-            .findByIdAndUpdate(id, { visible: false, visibilityChangedAt: Date.now() }, { new: true })
-            .then((hiddenRefereedResearch) => res.json(hiddenRefereedResearch))
-            .catch((err) => sendError(res, err)))
+    validateID(id).then(() => {
+        RefereedResearch.findById(id)
+            .then((ReferredResearch) => {
+                if (req.query.action === 'toggleVisibility') {
+                    ReferredResearch.visible = !ReferredResearch.visible;
+                    ReferredResearch.visibilityChangedAt = Date.now();
+                } else {
+                    return res.status(400).json({
+                        message: 'Invalid action'
+                    });
+                }
+                ReferredResearch.save()
+                    .then((updatedReferredResearch) => res.json(updatedReferredResearch))
+                    .catch((err) => sendError(res, err));
+            })
+            .catch((err) => sendError(res, err));
+    })
         .catch((err) => sendError(res, err));
 };
 
@@ -83,6 +94,6 @@ module.exports = {
     createRefereedResearch,
     editRefereedResearch,
     getRefereedResearchById,
-    hideRefereedResearch,
+    hideRefereedResearch: editMetaData,
     deleteRefereedResearch
 };

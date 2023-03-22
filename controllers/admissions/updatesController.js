@@ -49,12 +49,21 @@ const editUpdate = (req, res) => {
         .catch((err) => sendError(res, err));
 };
 
-const toggleUpdateVisibility = (req, res) => {
+const editMetaData = (req, res) => {
     const id = req.query.id;
     validateID(id).then(() => {
         admissionUpdate.findById(id)
             .then((update) => {
-                update.visible = !update.visible;
+                if (req.query.action === 'toggleVisibility') {
+                    update.visible = !update.visible;
+                    update.visibilityChangedAt = Date.now();
+                } else if (req.query.action === 'toggleNew') {
+                    update.new = !update.new;
+                } else {
+                    return res.status(400).json({
+                        message: 'Invalid action'
+                    });
+                }
                 update.save()
                     .then((result) => res.json(result))
                     .catch((err) => sendError(res, err));
@@ -79,6 +88,6 @@ module.exports = {
     getUpdates,
     getUpdateById,
     editUpdate,
-    toggleUpdateVisibility,
+    toggleUpdateVisibility: editMetaData,
     deleteUpdate
 };

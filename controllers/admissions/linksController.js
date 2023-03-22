@@ -47,13 +47,19 @@ const editLink = (req, res) => {
         .catch((err) => sendError(res, err));
 }
 
-const toggleLinkVisiblity = (req, res) => {
+const editMetaData = (req, res) => {
     const id = req.query.id;
     validateID(id).then(() => {
         admissionLink.findById(id)
             .then((link) => {
-                link.visible = !link.visible;
-                link.visibilityChangedAt = !link.visible ? Date.now() : null;
+                if (req.query.action === 'toggleVisibility') {
+                    link.visible = !link.visible;
+                    link.visibilityChangedAt = Date.now();
+                } else {
+                    return res.status(400).json({
+                        message: 'Invalid action'
+                    });
+                }
                 link.save()
                     .then((updatedLink) => res.json(updatedLink))
                     .catch((err) => sendError(res, err));
@@ -79,6 +85,6 @@ module.exports = {
     getLinks,
     getLinkById,
     editLink,
-    toggleLinkVisiblity,
+    toggleLinkVisiblity: editMetaData,
     deleteLink
 }
