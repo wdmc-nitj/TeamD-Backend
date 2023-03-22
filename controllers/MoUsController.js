@@ -53,11 +53,23 @@ const editMoU = (req, res) => {
         .catch((err) => sendError(res, err));
 };
 
-const hideMoU = (req, res) => {
+const editMetaData = (req, res) => {
     const id = req.query.id;
     validateID(id).then(() => {
-        MoU.findByIdAndUpdate(id, { visible: false, visibilityChangedAt: Date.now() }, { new: true })
-            .then((updatedMoU) => res.json(updatedMoU))
+        MoU.findById(id)
+            .then((mou) => {
+                if (req.query.action === 'toggleVisibility') {
+                    mou.visible = !mou.visible;
+                    mou.visibilityChangedAt = Date.now();
+                } else {
+                    return res.status(400).json({
+                        message: 'Invalid action'
+                    });
+                }
+                mou.save()
+                    .then((updatedMoU) => res.json(updatedMoU))
+                    .catch((err) => sendError(res, err));
+            })
             .catch((err) => sendError(res, err));
     })
         .catch((err) => sendError(res, err));
@@ -78,6 +90,6 @@ module.exports = {
     getMoUs,
     getMoUById,
     editMoU,
-    hideMoU,
+    hideMoU: editMetaData,
     deleteMoU
 };
