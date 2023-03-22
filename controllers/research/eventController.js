@@ -105,22 +105,27 @@ const updateeventByID = (req, res) => {
         .catch((err) => sendError(res, err));
 };
 
-const hideeventByID = (req, res) => {
+const editMetaData = (req, res) => {
     const id = req.query.id;
-
-    if (!validateID(id)) {
-        return sendError(res, `Invalid ID: ${id}`);
-    }
-
-    Event
-        .findByIdAndUpdate(id, { visible: false, visibilityChangedAt: Date.now() }, { new: true })
-        .then((updatedevent) => {
-            if (!updatedevent) {
-                return sendError(res, `event not found with ID: ${id}`);
-            }
-
-            res.json(updatedevent);
-        })
+    validateID(id).then(() => {
+        Event.findById(id)
+            .then((event) => {
+                if (req.query.action === 'toggleVisibility') {
+                    event.visible = !event.visible;
+                    event.visibilityChangedAt = Date.now();
+                } else if (req.query.action === 'toggleNew') {
+                    event.new = !event.new;
+                } else {
+                    return res.status(400).json({
+                        message: 'Invalid action'
+                    });
+                }
+                event.save()
+                    .then((updatedEvent) => res.json(updatedEvent))
+                    .catch((err) => sendError(res, err));
+            })
+            .catch((err) => sendError(res, err));
+    })
         .catch((err) => sendError(res, err));
 };
 
@@ -148,6 +153,6 @@ module.exports = {
     createevent,
     geteventByID,
     updateeventByID,
-    hideeventByID,
+    hideeventByID: editMetaData,
     deleteeventByID
 };

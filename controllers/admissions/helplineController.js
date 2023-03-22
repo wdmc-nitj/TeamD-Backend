@@ -59,8 +59,6 @@ const editMetaData = (req, res) => {
                 if (req.query.action === 'toggleVisibility') {
                     helpline.visible = !helpline.visible;
                     helpline.visibilityChangedAt = Date.now();
-                } else if (req.query.action === 'toggleNew') {
-                    helpline.new = !helpline.new;
                 } else {
                     return res.status(400).json({
                         message: 'Invalid action'

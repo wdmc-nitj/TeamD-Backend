@@ -97,23 +97,26 @@ const updateSponsoredProjectByID = (req, res) => {
         .catch(err => sendError(res, err));
 };
 
-const hideSponsoredProjectByID = (req, res) => {
+const editMetaData = (req, res) => {
     const id = req.query.id;
-
-    if (!validateID(id)) {
-        return sendError(res, `Invalid ID: ${id}`);
-    }
-
-    SponsoredProject
-        .findByIdAndUpdate(id, { visible: false, visibilityChangedAt: Date.now() }, { new: true })
-        .then(sponsoredProject => {
-            if (!sponsoredProject) {
-                return sendError(res, `Sponsored Project not found with ID: ${id}`);
-            }
-
-            res.json(sponsoredProject);
-        })
-        .catch(err => sendError(res, err));
+    validateID(id).then(() => {
+        SponsoredProject.findById(id)
+            .then((sponsoredProject) => {
+                if (req.query.action === 'toggleVisibility') {
+                    sponsoredProject.visible = !sponsoredProject.visible;
+                    sponsoredProject.visibilityChangedAt = Date.now();
+                } else {
+                    return res.status(400).json({
+                        message: 'Invalid action'
+                    });
+                }
+                sponsoredProject.save()
+                    .then((updatedSponsoredProject) => res.json(updatedSponsoredProject))
+                    .catch((err) => sendError(res, err));
+            })
+            .catch((err) => sendError(res, err));
+    })
+        .catch((err) => sendError(res, err));
 };
 
 const deleteSponsoredProjectByID = (req, res) => {
@@ -142,6 +145,6 @@ module.exports = {
     getVisibleSponsoredProjectsGroupedByYear,
     getSponsoredProjectByID,
     updateSponsoredProjectByID,
-    hideSponsoredProjectByID,
+    hideSponsoredProjectByID: editMetaData,
     deleteSponsoredProjectByID
 };

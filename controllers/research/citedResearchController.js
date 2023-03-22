@@ -63,14 +63,26 @@ const editCitedResearch = (req, res) => {
         .catch((err) => sendError(res, err));
 };
 
-// DELETE hide cited research
-const hideCitedResearch = (req, res) => {
+// PUT hide cited research
+const editMetaData = (req, res) => {
     const id = req.query.id;
-
-    validateID(id)
-        .then(() => CitedResearch
-            .findByIdAndUpdate(id, { visible: false, visibilityChangedAt: Date.now() }, { new: true }))
-        .then((updatedCitedResearch) => res.json(updatedCitedResearch))
+    validateID(id).then(() => {
+        CitedResearch.findById(id)
+            .then((citedResearch) => {
+                if (req.query.action === 'toggleVisibility') {
+                    citedResearch.visible = !citedResearch.visible;
+                    citedResearch.visibilityChangedAt = Date.now();
+                } else {
+                    return res.status(400).json({
+                        message: 'Invalid action'
+                    });
+                }
+                citedResearch.save()
+                    .then((updatedCitedResearch) => res.json(updatedCitedResearch))
+                    .catch((err) => sendError(res, err));
+            })
+            .catch((err) => sendError(res, err));
+    })
         .catch((err) => sendError(res, err));
 };
 
@@ -90,6 +102,6 @@ module.exports = {
     getCitedResearchById,
     createCitedResearch,
     editCitedResearch,
-    hideCitedResearch,
+    hideCitedResearch: editMetaData,
     deleteCitedResearch,
 };
