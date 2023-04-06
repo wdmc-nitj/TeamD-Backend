@@ -1,5 +1,5 @@
-const MoU = require('../models/MoUs');
-const { sendError, validateID } = require('../utils');
+const MoU = require('../../models/research/MoUs');
+const { sendError, validateID } = require('../../utils');
 
 
 const createMoU = (req, res) => {

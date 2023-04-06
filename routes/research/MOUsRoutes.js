@@ -2,7 +2,7 @@
 
 const express = require('express');
 const MoURouter = express.Router();
-const MoUsController = require('../controllers/MoUsController');
+const MoUsController = require('../../controllers/research/MoUsController');
 
 MoURouter.route('/create')
     .post(MoUsController.createMoU);
