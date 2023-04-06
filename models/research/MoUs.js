@@ -72,4 +72,5 @@ const MoUSchema = new Schema({
     }
 }, { timestamps: true });
 
-module.exports = mongoose.model('MoU', MoUSchema);
+const MoU = mongoose.model('MoU', MoUSchema);
+module.exports = MoU;
