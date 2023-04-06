@@ -1,6 +1,6 @@
 const express = require('express');
 const recruitmentUpdateRouter = express.Router();
-const recruitmentUpdateController = require('../../controllers/recruitmentUpdateController');
+const recruitmentUpdateController = require('../../controllers/jobUpdatesController');
 
 recruitmentUpdateRouter.route('/create')
     .post(recruitmentUpdateController.createRecruitmentUpdate);

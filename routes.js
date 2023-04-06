@@ -3,7 +3,7 @@ const mainRouter = require('express').Router();
 // routes
 const admissionsRoutes = require('./routes/admissionsRoutes');
 const researchRoutes = require('./routes/researchRoutes');
-const recruitmentsRoutes = require('./routes/recruitmentsRoutes');
+const recruitmentsRoutes = require('./routes/jobsRoutes');
 const alumniRoutes = require('./routes/alumniRoutes');
 
 mainRouter.use('/admissions', admissionsRoutes);

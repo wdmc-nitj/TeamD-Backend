@@ -1,5 +1,5 @@
 const { sendError, validateID } = require('../utils');
-const RecruitmentUpdate = require('../models/recruitmentUpdates');
+const RecruitmentUpdate = require('../models/jobs');
 
 // GET all recruitment updates
 const getAllRecruitmentUpdates = (req, res) => {
