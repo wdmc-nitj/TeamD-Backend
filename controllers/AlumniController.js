@@ -102,7 +102,6 @@ const editLandingPageData = async (req, res) => {
         landingPageDataInDB = landingPageDataInDB._doc;
 
         landingPageDataInDB = {
-            ...landingPageDataInDB,
             ...landingPageData,
         };
 
@@ -132,21 +131,16 @@ const recentEvents = (req, res) => {
     }
 };
 
-const editRecentEvents = async (req, res) => {
+const editRecentEvent = async (req, res) => {
     try {
-        const recentEvents = req.body;
+        const { recentEvent, id } = req.body;
 
-        let recentEventsInDB = await AlumniEvents.findOne({});
-        recentEventsInDB = recentEventsInDB._doc;
+        let recentEventInDB = await AlumniEvents.findOne({ _id: id });
+        recentEventInDB = recentEventInDB._doc;
 
-        recentEventsInDB = {
-            ...recentEventsInDB,
-            ...recentEvents,
-        };
-
-        recentEventsInDB = await AlumniEvents.findOneAndUpdate(
-            { _id: recentEventsInDB._id },
-            { $set: recentEventsInDB },
+        recentEventInDB = await AlumniEvents.findOneAndUpdate(
+            { _id: recentEventInDB._id },
+            { $set: { ...recentEvent } },
             { new: true }
         );
 
@@ -202,6 +196,6 @@ module.exports = {
     recentEvents,
     givingBack,
     editGivingBack,
-    editRecentEvents,
+    editRecentEvent,
     editLandingPageData,
 };

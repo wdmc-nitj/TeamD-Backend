@@ -8,42 +8,7 @@ const AlumniGivingBackSchema = new Schema(
             type: [String],
         },
         utilizations: {
-            infrastructure: {
-                major: {
-                    type: [{ title: String, description: String }],
-                },
-                minor: {
-                    type: [{ title: String, description: String }],
-                },
-            },
-            facilities: {
-                type: [{ title: String, description: String }],
-            },
-            students: {
-                type: [{ title: String, description: String }],
-            },
-            academics: {
-                type: [{ title: String, description: String }],
-            },
-            collaboration: {
-                type: [{ title: String, description: String }],
-            },
-            establishmentOfCentreOfExcellence: {
-                type: [{ title: String, description: String }],
-            },
-            innovationPrograms: {
-                type: [{ title: String, description: String }],
-            },
-
-            communityOutreach: {
-                type: [{ title: String, description: String }],
-            },
-            facultyWelfare: {
-                type: [{ title: String, description: String }],
-            },
-            environmentPrograms: {
-                type: [{ title: String, description: String }],
-            },
+            type: [{ title: String, subTitle: String, description: String }],
         },
     },
     { timestamps: true }
