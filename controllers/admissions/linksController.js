@@ -7,7 +7,7 @@ const createLink = (req, res) => {
     link.save()
         .then((createdLink) => res.status(201).json(createdLink))
         .catch((err) => sendError(res, err));
-}
+};
 
 const getLinks = (req, res) => {
     let filter = {};
@@ -18,73 +18,76 @@ const getLinks = (req, res) => {
         filter.visible = false;
     }
 
-    admissionLink.find(filter)
+    admissionLink
+        .find(filter)
         .sort({ updatedAt: -1 })
         .then((links) => res.json(links))
         .catch((err) => sendError(res, err));
-}
+};
 
 const getLinkById = (req, res) => {
-
     const id = req.query.id;
-    validateID(id).then(() => {
-        admissionLink.findById(id)
-            .then((link) => res.json(link))
-            .catch((err) => sendError(res, err));
-    })
+    validateID(id)
+        .then(() => {
+            admissionLink
+                .findById(id)
+                .then((link) => res.json(link))
+                .catch((err) => sendError(res, err));
+        })
         .catch((err) => sendError(res, err));
-}
+};
 
 const editLink = (req, res) => {
-
     const id = req.query.id;
-    validateID(id).then(() => {
-        req.body.updatedAt = Date.now();
-        admissionLink.findByIdAndUpdate(id, req.body, { new: true, runValidators: true })
-            .then((updatedLink) => res.json(updatedLink))
-            .catch((err) => sendError(res, err));
-    })
+    validateID(id)
+        .then(() => {
+            req.body.updatedAt = Date.now();
+            admissionLink
+                .findByIdAndUpdate(id, req.body, {
+                    new: true,
+                    runValidators: true,
+                })
+                .then((updatedLink) => res.json(updatedLink))
+                .catch((err) => sendError(res, err));
+        })
         .catch((err) => sendError(res, err));
-}
+};
 
 const editMetaData = (req, res) => {
     const id = req.query.id;
-    validateID(id).then(() => {
-        admissionLink.findById(id)
-            .then((link) => {
-                if (req.query.action === 'toggleVisibility') {
+    validateID(id)
+        .then(() => {
+            admissionLink
+                .findById(id)
+                .then((link) => {
                     link.visible = !link.visible;
-                    link.visibilityChangedAt = Date.now();
-                } else {
-                    return res.status(400).json({
-                        message: 'Invalid action'
-                    });
-                }
-                link.save()
-                    .then((updatedLink) => res.json(updatedLink))
-                    .catch((err) => sendError(res, err));
-            })
-            .catch((err) => sendError(res, err));
-    })
+                    link.disabledAt = !link.visible ? Date.now() : null;
+                    link.save()
+                        .then((updatedLink) => res.json(updatedLink))
+                        .catch((err) => sendError(res, err));
+                })
+                .catch((err) => sendError(res, err));
+        })
         .catch((err) => sendError(res, err));
-}
+};
 
 const deleteLink = (req, res) => {
-
     const id = req.query.id;
-    validateID(id).then(() => {
-        admissionLink.findByIdAndDelete(id)
-            .then((deletedLink) => res.json(deletedLink))
-            .catch((err) => sendError(res, err));
-    })
+    validateID(id)
+        .then(() => {
+            admissionLink
+                .findByIdAndDelete(id)
+                .then((deletedLink) => res.json(deletedLink))
+                .catch((err) => sendError(res, err));
+        })
         .catch((err) => sendError(res, err));
-}
+};
 
 module.exports = {
     createLink,
     getLinks,
     getLinkById,
     editLink,
-    toggleLinkVisiblity: editMetaData,
-    deleteLink
-}
+    toggleLinkVisiblity,
+    deleteLink,
+};
